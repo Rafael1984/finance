@@ -794,7 +794,11 @@ a.tag { text-decoration: none; }
 .quick-input:focus-visible { outline: none; border-color: var(--emerald-700); background: #fff; box-shadow: 0 0 0 4px rgba(20, 114, 79, .14); }
 .quick-save { min-height: 56px; border-radius: 16px; padding: 0 24px; }
 .quick-save:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
-.quick-prev { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; animation: rise .25s var(--ease-out) both; }
+.quick-prev { display: grid; gap: 8px; margin-top: 12px; animation: rise .25s var(--ease-out) both; }
+.prev-head { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: var(--w-semibold); letter-spacing: .04em; color: var(--gold-text); }
+.prev-item { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-width: 0; }
+.prev-item + .prev-item { padding-top: 8px; border-top: 1px dashed var(--line); }
+.prev-item .pchip { max-width: 100%; }
 .quick-prev:empty { display: none; }
 .pchip { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 4px 11px; border-radius: var(--r-pill); background: var(--surface-2); border: 1px solid var(--border); font-size: 13.5px; font-weight: var(--w-semibold); color: var(--text); }
 .pchip .icon { width: 14px; height: 14px; }
@@ -806,6 +810,15 @@ button.pchip.kind:hover { filter: brightness(1.15); }
 .pchip.fut { background: var(--gold-soft); border-color: #ead9b5; color: var(--gold-text); }
 .pchip.warn { background: #fdf0f1; border-color: #f3cdd1; color: var(--ink); }
 .pchip.desc { background: transparent; border-style: dashed; font-weight: var(--w-medium); }
+.pchip small { font-size: 12px; font-weight: var(--w-medium); color: var(--ink-2); }
+.pchip.rota { background: #fff; border-color: rgba(20, 114, 79, .3); color: var(--emerald-950); font-weight: var(--w-medium); }
+.pchip.rota .icon { color: var(--emerald-700); flex: none; }
+.pchip.rota.in { background: #eaf5ef; }
+.pchip.rota.card, .pchip.rota.fut { background: var(--gold-soft); border-color: #ead9b5; color: var(--gold-text); }
+.pchip.rota.card .icon, .pchip.rota.fut .icon { color: var(--gold-text); }
+.pchip.rota.rep { background: #f1f4f2; }
+.pchip.rota.warn { background: #fdf0f1; border-color: #f3cdd1; color: var(--ink); }
+.pchip.rota.warn .icon { color: var(--ink); }
 .quick-prev .btn-ghost { min-height: 32px; padding: 4px 10px; font-size: 13.5px; }
 .quick-dica { margin-top: 10px; font-size: 13px; color: var(--text-muted); }
 kbd { font-family: var(--font-sans); font-size: 11.5px; font-weight: var(--w-semibold); padding: 1px 7px; border-radius: 6px; border: 1px solid var(--line); border-bottom-width: 2px; background: var(--surface-2); color: var(--ink-2); }
@@ -1102,11 +1115,11 @@ dialog.sheet.sheet-wide { width: min(760px, calc(100vw - 32px)); }
               <form id="form-rapido" autocomplete="off" novalidate>
                 <label class="quick-label" for="rapido" id="rapido-label"><svg class="icon icon-sm"><use href="#i-bolt"/></svg>Registro rápido</label>
                 <div class="quick-row">
-                  <input id="rapido" class="quick-input" type="text" enterkeyhint="done" placeholder="Ex.: mercado 85,90 pix" aria-describedby="rapido-prev rapido-dica" spellcheck="false" autocapitalize="off" autocorrect="off">
+                  <input id="rapido" class="quick-input" type="text" enterkeyhint="done" placeholder="Ex.: pago 15 reais mercado via pix" aria-describedby="rapido-prev rapido-dica" spellcheck="false" autocapitalize="off" autocorrect="off">
                   <button class="btn btn-primary quick-save" type="submit" id="rapido-salvar" disabled>Salvar</button>
                 </div>
                 <div class="quick-prev" id="rapido-prev"></div>
-                <p class="quick-dica" id="rapido-dica">Escreva do seu jeito: o que foi e o valor. Se quiser, diga como pagou e quando. <span class="kbd-hint">Atalho: tecla <kbd>/</kbd></span></p>
+                <p class="quick-dica" id="rapido-dica">Escreva como numa mensagem: o que foi, o valor e, se quiser, como pagou e quando. Dá para lançar várias coisas de uma vez. <span class="kbd-hint">Atalho: tecla <kbd>/</kbd></span></p>
                 <div class="quick-ex" id="rapido-ex" role="group" aria-label="Exemplos. Toque para usar"></div>
               </form>
             </section>
@@ -1315,17 +1328,17 @@ dialog.sheet.sheet-wide { width: min(760px, calc(100vw - 32px)); }
                 <caption class="sr-only">O que aconteceu e onde registrar</caption>
                 <thead><tr><th scope="col">O que aconteceu</th><th scope="col">Onde registrar</th></tr></thead>
                 <tbody>
-                  <tr><td>Gastei com Pix, débito, dinheiro ou VA/VR</td><td><span class="ui">Registro rápido</span>: escreva, por exemplo, “mercado 85,90 pix”</td></tr>
+                  <tr><td>Gastei com Pix, débito, dinheiro ou VA/VR</td><td><span class="ui">Registro rápido</span>: escreva, por exemplo, “pago 15 reais mercado via pix”</td></tr>
                   <tr><td>Comprei no cartão de crédito</td><td><span class="ui">Registro rápido</span>: “tv 1.200 em 6x nubank” (ou <span class="ui">Novo lançamento</span> › Forma <span class="ui">Crédito</span>)</td></tr>
-                  <tr><td>Recebo salário todo mês</td><td><span class="ui">Novo lançamento</span> › <span class="ui">Receita</span> › marque <span class="ui">Repete todo mês (ex.: salário)</span>. Uma vez só</td></tr>
+                  <tr><td>Recebo salário todo mês</td><td><span class="ui">Registro rápido</span>: “salário 5.000 todo dia 5”, ou <span class="ui">Novo lançamento</span> › <span class="ui">Receita</span> › marque <span class="ui">Repete todo mês (ex.: salário)</span>. Uma vez só</td></tr>
                   <tr><td>Recebi um freela, venda ou reembolso</td><td><span class="ui">Registro rápido</span>: “recebi freela 800”</td></tr>
                   <tr><td>Caiu o vale-alimentação ou o vale-refeição</td><td><span class="ui">Registro rápido</span>: “va caiu 600” ou “vr caiu 500”</td></tr>
-                  <tr><td>Tenho uma conta fixa (luz, internet, aluguel)</td><td><span class="ui">Contas</span> › <span class="ui">Nova conta</span> › marque <span class="ui">Repete todo mês</span></td></tr>
+                  <tr><td>Tenho uma conta fixa (luz, internet, aluguel)</td><td><span class="ui">Registro rápido</span>: “aluguel 1.500 todo dia 10”, ou <span class="ui">Contas</span> › <span class="ui">Nova conta</span> › marque <span class="ui">Repete todo mês</span></td></tr>
                   <tr><td>A conta é paga no débito automático ou no cartão</td><td>Na conta, em <span class="ui">Como esta conta é paga</span>, escolha <span class="ui">Débito automático na conta</span> ou <span class="ui">Automático no cartão</span></td></tr>
                   <tr><td>Paguei uma conta cadastrada</td><td>Botão <span class="ui">Paguei</span> na conta, ou no Registro rápido: “paguei luz 160”. Não lance como gasto</td></tr>
-                  <tr><td>Paguei a fatura do cartão</td><td><span class="ui">Cartões</span> › <span class="ui">Pagar fatura</span>. Não lance as compras de novo</td></tr>
-                  <tr><td>Guardei ou investi dinheiro</td><td><span class="ui">Registro rápido</span>: “guardei 300 reserva”, ou <span class="ui">Reserva e metas</span> › <span class="ui">Guardar dinheiro</span></td></tr>
-                  <tr><td>Tirei dinheiro de um investimento</td><td><span class="ui">Investimentos</span> › <span class="ui">Registrar movimentação</span> › <span class="ui">Resgate</span></td></tr>
+                  <tr><td>Paguei a fatura do cartão</td><td><span class="ui">Registro rápido</span>: “paguei a fatura do nubank”, ou <span class="ui">Cartões</span> › <span class="ui">Pagar fatura</span>. Não lance as compras de novo</td></tr>
+                  <tr><td>Guardei ou investi dinheiro</td><td><span class="ui">Registro rápido</span>: “guardei 300 na reserva”, ou <span class="ui">Reserva e metas</span> › <span class="ui">Guardar dinheiro</span></td></tr>
+                  <tr><td>Tirei dinheiro de um investimento</td><td><span class="ui">Registro rápido</span>: “resgatei 200 da poupança”, ou <span class="ui">Investimentos</span> › <span class="ui">Registrar movimentação</span> › <span class="ui">Resgate</span></td></tr>
                   <tr><td>Quero trazer o extrato do banco de uma vez</td><td><span class="ui">Lançamentos</span> › <span class="ui">Importar extrato</span> e escolha o arquivo OFX baixado do banco. Você confere tudo antes de importar</td></tr>
                   <tr><td>Errei alguma coisa</td><td>Toque em <span class="ui">Desfazer</span> no aviso que aparece embaixo, ou em <span class="ui">Editar</span> no item</td></tr>
                 </tbody>
@@ -1346,28 +1359,40 @@ dialog.sheet.sheet-wide { width: min(760px, calc(100vw - 32px)); }
             <article class="card passo" id="passo-2" tabindex="-1" aria-labelledby="h-p2">
               <div class="passo-head"><span class="passo-num" aria-hidden="true">2</span><div><h3 id="h-p2">Registre em segundos com o Registro rápido</h3><p>O jeito mais rápido de anotar o dia a dia.</p></div></div>
               <p class="onde"><svg class="icon"><use href="#i-bolt"/></svg><span>Onde: campo <span class="ui">Registro rápido</span>, no topo da Visão geral. No computador, aperte a tecla <kbd>/</kbd> em qualquer tela.</span></p>
-              <p class="guia-txt">Escreva do seu jeito o que foi e o valor. Se quiser, diga como pagou e quando. Antes de salvar, o site mostra o que entendeu (tipo, valor, categoria, forma de pagamento e data). Confira e aperte <span class="ui">Salvar</span> ou Enter.</p>
+              <p class="guia-txt">Escreva como numa mensagem: o que foi e o valor. Se quiser, diga como pagou e quando. Antes de salvar, o site mostra o que entendeu (tipo, valor, categoria, forma de pagamento, data) e <b>para onde o dinheiro vai</b>: sai do caixa, vai para a fatura do cartão, sai do VA/VR, entra no caixa ou vai para um investimento. Confira e aperte <span class="ui">Salvar</span> ou Enter.</p>
               <table class="quick">
                 <caption class="sr-only">Exemplos do registro rápido</caption>
                 <thead><tr><th scope="col">Você escreve</th><th scope="col">O site entende</th></tr></thead>
                 <tbody>
-                  <tr><td>almoço 32 vr</td><td>Gasto de R$ 32 em Alimentação, pago com VA/VR, hoje</td></tr>
-                  <tr><td>uber 18,50 ontem</td><td>Gasto de R$ 18,50 em Transporte por app, ontem</td></tr>
-                  <tr><td>mercado 245,90 débito</td><td>Gasto em Mercado, no débito</td></tr>
-                  <tr><td>tv 1.200 em 6x nubank</td><td>Compra de R$ 1.200 em 6 parcelas de R$ 200 no cartão Nubank</td></tr>
-                  <tr><td>cinema 40 amanhã</td><td>Gasto agendado para amanhã</td></tr>
-                  <tr><td>recebi freela 800</td><td>Receita de R$ 800 (outras receitas)</td></tr>
-                  <tr><td>va caiu 600</td><td>Crédito de R$ 600 no vale-alimentação</td></tr>
-                  <tr><td>paguei luz 160</td><td>Marca a conta Luz como paga, com R$ 160</td></tr>
-                  <tr><td>guardei 300 reserva</td><td>Abre o aporte para a reserva, já preenchido</td></tr>
+                  <tr><td>pago 15 reais mercado via pix</td><td>Gasto de R$ 15 em Mercado, no Pix: sai do seu caixa agora</td></tr>
+                  <tr><td>gastei 89,90 na farmácia no crédito</td><td>Gasto em Saúde e bem-estar: vai para a fatura do cartão (não mexe no caixa hoje)</td></tr>
+                  <tr><td>almoço 32 no vr</td><td>Gasto em Alimentação: sai do saldo de VA/VR</td></tr>
+                  <tr><td>tv 1.200 em 6x nubank</td><td>Compra de R$ 1.200 em 6 parcelas de R$ 200 na fatura do Nubank</td></tr>
+                  <tr><td>uber 18,50 ontem</td><td>Gasto em Transporte por app, com a data de ontem</td></tr>
+                  <tr><td>almoço 30 e uber 18 no pix</td><td>Dois gastos de uma vez, os dois no Pix</td></tr>
+                  <tr><td>cinema 40 sexta que vem</td><td>Gasto agendado: já desconta de “Quanto ainda posso gastar”</td></tr>
+                  <tr><td>recebi freela 800</td><td>Receita de R$ 800: entra no caixa agora</td></tr>
+                  <tr><td>vou receber 300 dia 25</td><td>Fica “a receber”: só entra no caixa no dia 25</td></tr>
+                  <tr><td>va caiu 600</td><td>R$ 600 no saldo de vale-alimentação</td></tr>
+                  <tr><td>paguei luz 160</td><td>Marca a conta Luz (cadastrada) como paga, com R$ 160</td></tr>
+                  <tr><td>paguei a fatura do nubank</td><td>Paga a fatura em aberto do Nubank, com o valor já preenchido</td></tr>
+                  <tr><td>netflix 55,90 todo mês no cartão</td><td>Cria a conta mensal, paga sozinha no cartão</td></tr>
+                  <tr><td>salário 5.000 todo dia 5</td><td>Cria a receita fixa. Se o dia 5 já passou, começa no mês que vem (diga “caiu salário…” se já recebeu)</td></tr>
+                  <tr><td>guardei 300 na reserva</td><td>Aporte: sai do caixa e vai para a reserva (cria o investimento se ainda não existir)</td></tr>
+                  <tr><td>resgatei 200 da poupança</td><td>Resgate: volta para o caixa</td></tr>
                 </tbody>
               </table>
               <dl class="campos" style="margin-top:16px">
-                <div><dt>Palavras de data</dt><dd>hoje, ontem, anteontem, amanhã, dia 5, 05/11, segunda… domingo. Sem data, vale hoje.</dd></div>
-                <div><dt>Formas de pagamento</dt><dd>pix, débito, dinheiro, crédito ou cartão, va, vr, ou o nome do seu cartão. Sem forma, usa a que você mais usa.</dd></div>
-                <div><dt>Parcelas</dt><dd>6x ou “em 6 vezes”. Parcelado vai sempre para o cartão.</dd></div>
+                <div><dt>Valor</dt><dd>15, 15,90, R$ 15, 15 reais, 1.200, 2 mil, 1,5k ou por extenso (“cinquenta reais”).</dd></div>
+                <div><dt>Palavras de data</dt><dd>hoje, ontem, anteontem, amanhã, depois de amanhã, dia 5, 5 de novembro, 05/11, há 3 dias, semana passada, sexta, sexta passada, sexta que vem. Sem data, vale hoje.</dd></div>
+                <div><dt>Formas de pagamento</dt><dd><b>Saem do caixa:</b> pix, transferência, boleto, débito, dinheiro, espécie. <b>Vão para a fatura:</b> crédito, cartão, parcelado ou o nome do seu cartão. <b>Saem do VA/VR:</b> va, vr, vale, ticket, alelo, sodexo, pluxee, caju, flash. Sem forma, usa a que você mais usa e mostra “(seu padrão)”.</dd></div>
+                <div><dt>Parcelas</dt><dd>6x, “em 6 vezes”, “6 parcelas de 50” ou “parcelado em 6”. Parcelado vai sempre para o cartão.</dd></div>
+                <div><dt>Receitas</dt><dd>recebi, ganhei, caiu, entrou, me pagaram, vendi, reembolso, salário, freela, va/vr caiu.</dd></div>
+                <div><dt>Investimentos</dt><dd>guardei, investi, apliquei (aporte); resgatei, tirei da poupança (resgate); rendeu (rendimento). Com reserva, meta, poupança, cdb, tesouro, ações…</dd></div>
+                <div><dt>Todo mês</dt><dd>“todo mês”, “todo dia 10”, “mensal”: um gasto vira conta mensal e uma receita vira receita fixa. Com “débito automático” ou “no cartão”, a conta se paga sozinha.</dd></div>
+                <div><dt>Vários de uma vez</dt><dd>Separe com “e”, vírgula, ponto e vírgula ou “+”: “almoço 30, uber 18 e café 8 no pix”.</dd></div>
               </dl>
-              <p class="exemplo"><svg class="icon"><use href="#i-info"/></svg><span>Ele aprende com você: se “padaria” foi para Mercado uma vez, da próxima vai direto para Mercado. Entendeu algo errado? Toque no tipo para trocar entre gasto e receita, ou em <span class="ui">Ajustar detalhes</span>. Salvou errado? Toque em <span class="ui">Desfazer</span> no aviso.</span></p>
+              <p class="exemplo"><svg class="icon"><use href="#i-info"/></svg><span>Ele conhece centenas de palavras e lojas (iFood, Uber, Drogasil, Shopee, Netflix, Renner…) e aprende com você: se “padaria” foi para Mercado uma vez, da próxima vai direto para Mercado. Saque e transferência entre contas suas não são registrados, porque não mudam o seu dinheiro. Entendeu algo errado? Toque no tipo para trocar entre gasto e receita, ou em <span class="ui">Ajustar detalhes</span>. Salvou errado? Toque em <span class="ui">Desfazer</span> no aviso.</span></p>
             </article>
 
             <article class="card passo" id="passo-3" tabindex="-1" aria-labelledby="h-p3">
@@ -1547,7 +1572,7 @@ dialog.sheet.sheet-wide { width: min(760px, calc(100vw - 32px)); }
             <article class="card danger" aria-labelledby="h-zerar">
               <div class="card-head"><div><h3 id="h-zerar">Apagar todos os dados</h3><p>Remove tudo deste navegador. Gere um backup antes, se quiser guardar.</p></div></div>
               <button class="btn btn-secondary" type="button" id="btn-zerar"><svg class="icon"><use href="#i-trash"/></svg>Apagar todos os dados</button>
-              <p class="caption" style="margin-top:12px">Versão 3.1</p>
+              <p class="caption" style="margin-top:12px">Versão 3.2</p>
             </article>
           </div>
         </section>
@@ -2137,7 +2162,7 @@ dialog.sheet.sheet-wide { width: min(760px, calc(100vw - 32px)); }
 
 <script>
 /* =====================================================================
-   ORGANIZAÇÃO FINANCEIRA — versão 3.1
+   ORGANIZAÇÃO FINANCEIRA — versão 3.2
    1) Constantes  2) Estado  3) Persistência e backup  4) Formatação
    5) Motor de cálculo  6) Rotas  7) Telas  8) Formulários  9) Eventos
    Regras que evitam contagem dupla:
@@ -2705,7 +2730,8 @@ function memoria() {
       if (l.kind === "gasto") formas[l.forma] = (formas[l.forma] || 0) + 1;
     });
     const formaComum = (Object.entries(formas).sort((a, b) => b[1] - a[1])[0] || ["pix"])[0];
-    return { porDesc, porPalavra, formaComum };
+    const formaCaixa = (Object.entries(formas).filter(([f]) => ["pix", "debito", "dinheiro"].includes(f)).sort((a, b) => b[1] - a[1])[0] || ["pix"])[0];
+    return { porDesc, porPalavra, formaComum, formaCaixa };
   });
 }
 function atalhos(kind) {
@@ -2720,154 +2746,547 @@ function categoriasUsadas() {
 }
 function contasParaPagar() { return pendenciasAte(addMes(YM_HOJE, 1)).filter(c => c.pago == null); }
 
-/* Registro rápido: entende frases como “mercado 85,90 pix ontem” */
-const DIC_CAT = {
-  "Mercado": "mercado supermercado feira hortifruti sacolao acougue atacadao assai carrefour hiper",
-  "Alimentação": "almoco jantar lanche cafe padaria ifood comida marmita pizza hamburguer acai sorvete doce salgado pao",
-  "Restaurante": "restaurante rodizio churrascaria bar boteco sushi",
-  "Transporte por app": "uber 99 taxi cabify corrida",
-  "Combustível": "gasolina etanol alcool combustivel posto diesel abastecimento abasteci",
-  "Academia": "academia smartfit crossfit pilates",
-  "Assinaturas": "netflix spotify prime disney hbo youtube assinatura icloud deezer globoplay chatgpt",
-  "Saúde e bem-estar": "farmacia remedio remedios medico consulta exame dentista drogaria psicologo terapia hospital",
-  "Educação": "curso livro escola faculdade udemy alura apostila",
-  "Lazer": "cinema show teatro viagem passeio parque jogo game steam ingresso",
-  "Vestuário e acessórios": "roupa roupas camisa camiseta calca tenis sapato vestido bolsa",
-  "Compras online": "amazon shopee shein aliexpress magalu",
-  "Eletrônicos": "notebook fone tv monitor teclado mouse",
-  "Plano de celular": "recarga",
-  "Contas": "luz agua energia internet gas aluguel condominio iptu ipva"
+/* Registro rápido: entende frases do dia a dia e manda cada lançamento para o lugar certo.
+   Ex.: "pago 15 reais mercado via pix", "tv 1.200 em 6x nubank", "salário 5000 todo dia 5",
+   "almoço 32 e uber 18 no pix", "guardei 300 na reserva", "paguei a fatura do nubank".
+   Decide o que é, quanto, quando, como foi pago e para onde vai: caixa, fatura do cartão,
+   VA/VR, contas, investimentos ou receitas fixas. */
+
+/* Categorias: [categoria, nomes parecidos que valem no lugar, palavras]. "~" = palavra fraca (perde para as outras) */
+const DIC_CATEGORIAS = [
+  ["Plano de celular", ["Celular", "Telefone"], "plano de celular|plano do celular|conta do celular|conta de celular|recarga de celular|recarga do celular|crédito no celular|crédito de celular|recarga de crédito|recarga|chip|claro|vivo|tim|plano controle|operadora"],
+  ["Seguro do carro", ["Seguros", "Seguro"], "seguro do carro|seguro de carro|seguro auto|seguro automóvel|seguro do veículo|seguro da moto"],
+  ["Seguro do celular", ["Seguros", "Seguro"], "seguro do celular|seguro de celular|seguro celular"],
+  ["Parcela", ["Parcelas", "Empréstimos", "Financiamento"], "parcela do carro|parcela da moto|parcela do apartamento|parcela do apê|parcela da casa|parcela do empréstimo|financiamento|empréstimo|consórcio|consignado|~prestação"],
+  ["Mercado", ["Supermercado", "Mercado e casa"], "mercado|supermercado|mercadinho|mercearia|minimercado|feira|feirinha|hortifruti|sacolão|quitanda|açougue|peixaria|atacadão|atacarejo|assaí|carrefour|pão de açúcar|supermercado extra|mercado extra|big bom|sams club|makro|tenda atacado|st marche|oba hortifruti|hirota|guanabara|zaffari|nagumo|sonda|savegnago|condor|angeloni|bretas|comper|giassi|muffato|mart minas|super nosso|verdemar|dalben|dia supermercado|compras do mês|compra do mês|rancho|água mineral|galão de água|produtos de limpeza|papel higiênico|sabão em pó|~hortaliças|~fruta|~frutas|~verdura|~verduras|~legumes|~carne|~frango|~arroz|~feijão|~leite|~ovos|~detergente|~amaciante|~fralda|~fraldas"],
+  ["Restaurante", ["Restaurantes", "Alimentação"], "restaurante|rodízio|churrascaria|sushi|temakeria|comida japonesa|comida árabe|comida mexicana|japa|bar|boteco|barzinho|pub|cervejaria|choperia|happy hour|outback|coco bambu|madero|fogo de chão|bistrô|cantina|jantar fora|almoço fora|garçom|gorjeta|taxa de serviço|petiscaria|porção|petisco"],
+  ["Alimentação", ["Alimentacao", "Comida", "Restaurante"], "almoço|almocei|jantar|jantei|janta|lanche|lanchei|lanchinho|lanchonete|café|cafezinho|café da manhã|desjejum|padaria|panificadora|pão|salgado|coxinha|pastel|pastelaria|esfiha|pizza|pizzaria|hambúrguer|hamburgueria|burger|x tudo|x salada|x burguer|sanduíche|marmita|marmitex|quentinha|prato feito|pf|self service|refeição|açaí|sorvete|sorveteria|doceria|bolo|confeitaria|kopenhagen|cacau show|bombom|ifood|i food|uber eats|rappi|aiqfome|delivery|mcdonalds|mc donalds|mcdonald|méqui|bk|burger king|subway|habibs|giraffas|spoleto|china in box|bobs|kfc|starbucks|água de coco|tapioca|crepe|hot dog|cachorro quente|churros|pipoca|garrafa de água|caldo de cana|pão de queijo|~comida|~doce|~chocolate|~suco|~refrigerante|~refri|~salgadinho|~biscoito|~bolacha|~cerveja|~bebida|~bebidas|~vinho|~drink|~drinks"],
+  ["Transporte por app", ["Transporte", "Mobilidade"], "uber|99|99pop|99 pop|99moto|uber moto|táxi|taxi|cabify|indriver|indrive|corrida|mototáxi|mototaxi"],
+  ["Transporte", ["Mobilidade", "Transporte por app"], "ônibus|metrô|trem|cptm|bilhete único|recarga do bilhete|passagem de ônibus|passagem do ônibus|brt|vlt|estacionamento|zona azul|valet|pedágio|sem parar|conectcar|veloe|taggy|patinete|ticket do estacionamento|ticket estacionamento|vale transporte|barca|balsa|rodoviária|~passagem"],
+  ["Carro", ["Veículo", "Veiculo", "Carro e moto", "Transporte", "Outros"], "mecânico|oficina|troca de óleo|óleo do carro|borracharia|revisão do carro|revisão da moto|alinhamento|balanceamento|funilaria|lava rápido|lava jato|lavagem do carro|bateria do carro|autopeças|peça do carro|guincho|vistoria|despachante|~pneu|~pneus"],
+  ["Combustível", ["Combustivel", "Transporte"], "gasolina|etanol|álcool|combustível|posto|posto de gasolina|diesel|gnv|abastecer|abasteci|abastecimento|shell|ipiranga|petrobras"],
+  ["Academia", ["Esporte", "Esportes", "Saúde e bem-estar"], "academia|mensalidade da academia|smartfit|smart fit|bluefit|bodytech|selfit|crossfit|pilates|musculação|personal trainer|yoga|natação|jiu jitsu|muay thai|treino funcional|gympass|wellhub|totalpass|~personal"],
+  ["Assinaturas", ["Assinatura", "Streaming"], "netflix|spotify|amazon prime|prime video|disney|disney plus|hbo max|hbo|globoplay|paramount|star plus|apple tv|apple music|youtube premium|youtube|deezer|tidal|icloud|google one|dropbox|chatgpt|openai|claude|microsoft 365|office 365|game pass|xbox game pass|playstation plus|ps plus|nintendo online|kindle unlimited|audible|crunchyroll|mubi|telecine|premiere|dazn|ifood clube|uber one|meli plus|duolingo|canva|adobe|linkedin premium|tinder|notion|~assinatura|~mensalidade"],
+  ["Beleza", ["Beleza e cuidados", "Cuidados pessoais", "Saúde e bem-estar"], "salão|salão de beleza|cabeleireiro|cabeleireira|cabelo|corte de cabelo|barbeiro|barbearia|barba|manicure|pedicure|unha|unhas|depilação|sobrancelha|maquiagem|cosmético|cosméticos|perfume|perfumaria|boticário|o boticário|natura|avon|sephora|eudora|shampoo|protetor solar|estética|limpeza de pele|botox|~creme"],
+  ["Saúde e bem-estar", ["Saúde", "Saude"], "farmácia|drogaria|remédio|medicamento|drogasil|droga raia|raia|pague menos|panvel|ultrafarma|drogaria são paulo|pacheco|venâncio|médico|médica|dentista|odontológico|ortodontista|psicólogo|psicóloga|terapia|terapeuta|psiquiatra|fisioterapia|fisio|nutricionista|nutri|hospital|pronto socorro|clínica|vacina|plano de saúde|unimed|amil|sulamérica|bradesco saúde|hapvida|notredame|óculos|ótica|lente de contato|álcool gel|vitamina|suplemento|whey|creatina|massagem|spa|acupuntura|pediatra|laboratório|fleury|~consulta|~exame|~exames"],
+  ["Educação", ["Educacao", "Estudos"], "curso|faculdade|universidade|escola|colégio|mensalidade da escola|mensalidade da faculdade|livro|livraria|apostila|material escolar|caderno|papelaria|caneta|canetas|udemy|alura|coursera|rocketseat|aula de inglês|inglês|wizard|ccaa|fisk|cultura inglesa|open english|cambly|pós graduação|mba|certificação|vestibular|enem|concurso|~prova|~inscrição|~aula|~aulas"],
+  ["Viagem", ["Viagens", "Lazer"], "viagem|hotel|pousada|hostel|airbnb|booking|decolar|123milhas|hurb|passagem aérea|passagem de avião|avião|voo|latam|gol linhas aéreas|azul linhas aéreas|aeroporto|bagagem|seguro viagem|aluguel de carro|localiza|movida|unidas|cruzeiro|excursão|turismo|hospedagem"],
+  ["Lazer", ["Diversão", "Entretenimento"], "cinema|cinemark|kinoplex|uci|filme|show|teatro|ingresso|sympla|eventim|balada|parque|zoológico|museu|boliche|karaokê|passeio|steam|psn|ps store|epic games|robux|free fire|escape room|kart|paintball|camping|estádio|pelada|aluguel de quadra|meia entrada|circo|exposição|~festa|~praia|~clube|~game|~jogo|~futebol|~quadra|~pesca"],
+  ["Vestuário e acessórios", ["Vestuário", "Vestuario", "Roupas", "Roupa"], "roupa|roupas|camisa|camiseta|blusa|calça|bermuda|short|saia|vestido|casaco|jaqueta|moletom|cueca|calcinha|sutiã|pijama|tênis|sapato|sandália|chinelo|bota|havaianas|bolsa|mochila|cinto|óculos de sol|boné|renner|c&a|riachuelo|marisa|zara|hering|centauro|netshoes|nike|adidas|puma|pernambucanas|youcom|decathlon|lupo|arezzo|melissa|bijuteria|brinco|~meia|~relógio|~joia|~anel|~colar"],
+  ["Compras online", ["Compras", "Internet"], "amazon|mercado livre|mercadolivre|shopee|shein|aliexpress|ali express|temu|magalu|magazine luiza|americanas|submarino|casas bahia|kabum|ponto frio|compra online|compras online|compra na internet|loja online|frete|correios|sedex"],
+  ["Eletrônicos", ["Eletronicos", "Tecnologia"], "celular novo|smartphone|iphone|galaxy|notebook|laptop|computador|pc|monitor|teclado|mouse|fone|fone de ouvido|headset|airpods|carregador|cabo usb|tablet|ipad|tv|televisão|smart tv|videogame|console|ps5|playstation|xbox|nintendo switch|câmera|caixa de som|jbl|alexa|echo dot|kindle|impressora|cartucho|pendrive|hd externo|ssd|xiaomi|motorola|capinha|película|~celular"],
+  ["Contas", ["Contas fixas", "Moradia", "Casa"], "luz|energia|conta de luz|conta da luz|enel|cemig|copel|cpfl|light|celpe|coelba|equatorial|neoenergia|elektro|conta de água|conta da água|sabesp|cedae|copasa|sanepar|embasa|compesa|internet|conta de internet|wifi|wi fi|vivo fibra|claro net|oi fibra|tim live|conta de gás|comgás|botijão|gás de cozinha|vale gás|aluguel|condomínio|taxa de condomínio|seguro residencial|tv a cabo|sky|telefone fixo|~água|~gás|~net|~fibra|~conta"],
+  ["Casa", ["Moradia", "Lar", "Casa e decoração", "Outros"], "móveis|móvel|sofá|colchão|armário|guarda roupa|decoração|cortina|tapete|lençol|travesseiro|panela|utensílios|eletrodoméstico|geladeira|fogão|microondas|máquina de lavar|liquidificador|air fryer|ventilador|ar condicionado|material de construção|leroy merlin|telhanorte|tok stok|tokstok|camicado|mobly|madeiramadeira|reforma|pintor|pedreiro|eletricista|encanador|chaveiro|dedetização|faxina|faxineira|diarista|salário da diarista|lavanderia|jardinagem|lâmpada|ferramenta|ferramentas|~mesa|~cadeira|~cama|~toalha|~conserto|~manutenção"],
+  ["Pets", ["Pet", "Animais", "Animal", "Outros"], "pet|pet shop|petshop|petz|cobasi|petlove|ração|veterinário|veterinária|banho e tosa|tosa|areia do gato|vacina do cachorro|~cachorro|~gato"],
+  ["Impostos e taxas", ["Impostos", "Taxas", "Contas"], "imposto|impostos|ipva|iptu|multa|multa de trânsito|tarifa bancária|anuidade|anuidade do cartão|iof|darf|inss|das do mei|das mei|imposto de renda|irpf|licenciamento|cartório|passaporte|cnh|carteira de motorista|~taxa|~tarifa|~juros"],
+  ["Presentes", ["Presente", "Doações e presentes", "Outros"], "presente|lembrancinha|amigo secreto|flores|floricultura|cesta de café|~natal|~aniversário"],
+  ["Filhos", ["Crianças", "Bebê", "Família", "Outros"], "creche|brinquedo|babá|escola das crianças|material das crianças|~mesada"],
+  ["Doações", ["Doação", "Igreja", "Dízimo", "Outros"], "doação|dízimo|igreja|caridade|vaquinha|~oferta"]
+];
+const normTok = t => semAcento(t).replace(/º/g, "o").replace(/ª/g, "a").replace(/[^a-z0-9&$]/g, "");
+const singular = t => (t.length <= 3 ? t : /eis$/.test(t) && t.length > 4 ? t.slice(0, -3) + "el" : /ais$/.test(t) && t.length > 4 ? t.slice(0, -3) + "al" : /ois$/.test(t) && t.length > 4 ? t.slice(0, -3) + "ol" : /[oa]es$/.test(t) && t.length > 4 ? t.slice(0, -3) + "ao" : /[rz]es$/.test(t) ? t.slice(0, -2) : /es$/.test(t) && !/ses$/.test(t) ? t.slice(0, -1) : /s$/.test(t) ? t.slice(0, -1) : t);
+const mesmoTok = (a, p) => a === p || (a.length > 3 && singular(a) === singular(p));
+const DIC = (() => {
+  const idx = new Map(), acentos = new Map();
+  DIC_CATEGORIAS.forEach(([cat, alt, frases], ordem) => frases.split("|").forEach(f => {
+    f = f.trim(); const fraco = f.startsWith("~"); if (fraco) f = f.slice(1);
+    const toks = f.split(/\s+/).map(normTok).filter(Boolean);
+    if (!toks.length) return;
+    const e = { toks, cat, alt, bonito: f, ordem, fraco };
+    [toks[0], singular(toks[0])].forEach(k => { if (!idx.has(k)) idx.set(k, new Set()); idx.get(k).add(e); });
+    f.split(/\s+/).forEach(p => { const n = normTok(p); if (n && semAcento(p) !== p && !acentos.has(n)) acentos.set(n, p); });
+  }));
+  return { idx, acentos };
+})();
+/* A categoria que existe na sua lista: a própria ou um nome parecido */
+function categoriaExistente(cat, alt = []) {
+  const cats = state.config.categorias;
+  for (const n of [cat, ...alt]) { const c = cats.find(x => semAcento(x) === semAcento(n)); if (c) return c; }
+  return null;
+}
+
+/* Palavras-chave (sem acento e sem diferença de maiúsculas) */
+const pal = s => s.split("|").map(x => x.trim().split(/\s+/).map(normTok).filter(Boolean)).filter(x => x.length);
+const KW = {
+  gastoVerbo: pal("paguei|pago|pagamos|pagar|pagando|gastei|gasto|gastamos|gastar|gastando|comprei|compro|compramos|comprar|comprinha|debitou|debitaram|descontou|descontaram|torrei|mandei|enviei|fiz|dei|emprestei|enviado|transferi|passei|assinei|contratei|abasteci|saiu|sai"),
+  passado: pal("paguei|pagamos|gastei|gastamos|comprei|compramos|torrei|assinei|contratei|abasteci|debitou|debitaram|saiu"),
+  receitaVerbo: pal("recebi|recebemos|recebido|recebida|ganhei|ganhamos|caiu|caíram|entrou|entraram|depositaram|depositou na minha conta|me pagaram|me pagou|me transferiu|me transferiram|me mandou|me mandaram|me deu|me deram|me devolveu|me devolveram|devolveram|devolveu|reembolsaram|reembolsou|estornaram|estornou|vendi|vendemos|pix recebido|recebimento|recebo|receber|vou receber|ganho|cai|entra"),
+  receitaPassado: pal("recebi|recebemos|ganhei|ganhamos|caiu|caíram|entrou|entraram|depositaram|me pagaram|me pagou|me transferiu|me transferiram"),
+  salario: pal("salário|salários|adiantamento|adiantamento salarial|vale salarial|holerite|décimo terceiro|13o salário|13o|13 salário|plr|ppr|participação nos lucros|bônus|bonificação|gratificação|hora extra|horas extras|férias|pró labore|prolabore"),
+  outrasReceitas: pal("freela|freelance|freelancer|bico|comissão|comissões|cashback|reembolso|estorno|devolução|venda|aluguel recebido|renda extra|dividendos|juros recebidos|prêmio|premiação|restituição|restituição do imposto|herança|pensão recebida|doação recebida|presente recebido|honorários|cachê|consultoria|serviço prestado|receita"),
+  pagaSalarioDe: pal("diarista|empregada|babá|faxineira|motorista|cuidadora|cuidador|funcionário|funcionária|jardineiro|caseiro|doméstica|personal"),
+  aporte: pal("guardei|guardar|guardo|guardamos|investi|investir|invisto|investimos|apliquei|aplicar|aplico|aportei|aporte|aportar|poupei"),
+  aporteComDestino: pal("depositei|coloquei|botei|separei|transferi|mandei|joguei|deixei|pus"),
+  resgate: pal("resgatei|resgate|resgatar|saquei|saque|sacar|tirei|retirei|retirada|resgatado"),
+  rendimento: pal("rendeu|rendimento|rendimentos|juros da poupança|juros do cdb|valorizou"),
+  invest: pal("reserva de emergência|reserva|emergência|poupança|cdb|lci|lca|tesouro direto|tesouro selic|tesouro|selic|ipca|cdi|ações|ação|fii|fiis|fundo imobiliário|fundos|fundo|cripto|criptomoeda|bitcoin|btc|ethereum|investimento|investimentos|aplicação|previdência|caixinha|cofrinho|corretora|meta|objetivo"),
+  investForte: pal("ações|ação|fii|fiis|cdb|lci|lca|tesouro direto|tesouro|bitcoin|btc|cripto|criptomoeda|ethereum|fundo imobiliário"),
+  fatura: pal("fatura|pagar o cartão|paguei o cartão|pagamento do cartão|pagamento da fatura|pgto cartão|pagar cartão"),
+  entreContas: pal("entre contas|para minha conta|pra minha conta|minha outra conta|para mim mesmo|pra mim mesmo|de uma conta pra outra|de uma conta para outra"),
+  recorrente: pal("todo mês|todos os meses|toda mês|mensalmente|por mês|ao mês|mensal|cada mês|todo santo mês"),
+  automatico: pal("débito automático|em débito automático|no débito automático|no automático|automático|automática"),
+  formas: [
+    ["vavr", pal("vale refeição|vale alimentação|cartão refeição|cartão alimentação|ticket refeição|ticket alimentação|alelo refeição|alelo alimentação|sodexo refeição|sodexo alimentação|pluxee refeição|pluxee alimentação|vr benefícios|ifood benefícios|cartão do vale|cartão benefício|cartão flash|no flash|pelo flash|cartão caju|no caju|pelo caju|caju benefícios|no vale|pelo vale|vale|va|vr|ticket|alelo|sodexo|pluxee|swile|benefício")],
+    ["debito", pal("cartão de débito|no débito|débito|visa electron|maestro")],
+    ["pix", pal("via pix|pelo pix|no pix|por pix|de pix|pix|transferência|ted|doc|no boleto|pelo boleto|boleto")],
+    ["dinheiro", pal("dinheiro vivo|em dinheiro|no dinheiro|em espécie|dinheiro|espécie|cash|em mãos|na mão|da carteira|na carteira|trocado")],
+    ["credito", pal("cartão de crédito|no crédito|crédito|no cartão|cartão|parcelado|parcelada|parcelei|a prazo|visa|mastercard|master|elo|amex|hipercard")]
+  ],
+  bancoForte: pal("nubank|nu bank|nuconta|itaú|itau|bradesco|santander|picpay|pagbank|pagseguro|c6 bank|c6|sicoob|sicredi|banrisul|credicard|ourocard|digio|neon|btg|banco do brasil|will bank|banco inter|banco pan|agibank"),
+  bancoFraco: pal("mercado pago|caixa econômica|caixa|inter|next|original|will|bb|safra|porto|xp|nu|pan"),
+  preposicao: new Set("no na pelo pela via do da pro pra para com".split(" ")),
+  protegidas: pal("crédito no celular|crédito de celular|recarga de crédito|ticket do estacionamento|ticket estacionamento|vale transporte|vale gás|carteira de motorista|salário da diarista"),
+  stop: new Set("de do da dos das no na nos nas em com pelo pela via o a os as e pra pro para por um uma uns umas reais real conto contos pila pilas mangos centavos valor total custou custo preco deu foi foram ficou eu me meu minha meus minhas seu sua ao hoje agora ai la ja mais tudo ambos ambas cada".split(" "))
 };
-const PAL = {
-  sal: ["salario", "adiantamento", "antecipacao", "13o", "13º", "decimo", "plr", "bonus", "bonificacao"],
-  rec: ["recebi", "receita", "freela", "freelance", "reembolso", "venda", "vendi", "cashback", "ganhei", "comissao", "dividendos", "caiu", "entrou"],
-  aporte: ["guardei", "investi", "aporte", "apliquei", "poupei"],
-  resgate: ["resgatei", "resgate", "saquei", "retirei"],
-  rend: ["rendeu", "rendimento", "rendimentos"],
-  verbos: ["paguei", "gastei", "comprei", "recebi", "caiu", "entrou", "guardei", "investi", "apliquei", "poupei", "resgatei", "saquei", "retirei", "rendeu", "foi", "deu"],
-  stop: ["de", "do", "da", "dos", "das", "no", "na", "nos", "nas", "em", "com", "pelo", "pela", "via", "o", "a", "os", "as", "e", "pra", "para", "por", "um", "uma", "reais", "real", "conto", "contos", "r$"],
-  formas: [["pix", ["pix"]], ["debito", ["debito"]], ["dinheiro", ["dinheiro", "especie", "cash"]], ["vavr", ["va", "vr", "vale", "alelo", "sodexo", "pluxee", "ticket", "caju", "refeicao", "alimentacao"]], ["credito", ["credito", "cartao", "parcelado", "parcelei"]]],
-  semana: ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"]
-};
+const SIGLAS = new Set("tv pc pf ipva iptu cnh iof inss irpf fgts cpf mei plr ppr cdb lci lca fii fiis ps5 jbl kfc bk ssd usb mba enem".split(" "));
+const NUM_PAL = { zero: 0, um: 1, uma: 1, dois: 2, duas: 2, tres: 3, quatro: 4, cinco: 5, seis: 6, sete: 7, oito: 8, nove: 9, dez: 10, onze: 11, doze: 12, treze: 13, catorze: 14, quatorze: 14, quinze: 15, dezesseis: 16, dezasseis: 16, dezessete: 17, dezoito: 18, dezenove: 19, vinte: 20, trinta: 30, quarenta: 40, cinquenta: 50, sessenta: 60, setenta: 70, oitenta: 80, noventa: 90, cem: 100, cento: 100, duzentos: 200, duzentas: 200, trezentos: 300, trezentas: 300, quatrocentos: 400, quinhentos: 500, quinhentas: 500, seiscentos: 600, setecentos: 700, oitocentos: 800, novecentos: 900 };
+const MOEDA_PAL = ["reais", "real", "conto", "contos", "pila", "pilas", "mangos", "pratas"];
+const MESES_N = { janeiro: 1, jan: 1, fevereiro: 2, fev: 2, marco: 3, abril: 4, abr: 4, maio: 5, junho: 6, jun: 6, julho: 7, jul: 7, agosto: 8, ago: 8, setembro: 9, set: 9, outubro: 10, out: 10, novembro: 11, nov: 11, dezembro: 12, dez: 12 };
+const SEMANA = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+const ANTES_DIA = new Set("na no nessa nesta essa esta ultima ultimo proxima proximo de desde dessa".split(" "));
+const TIPOS_PAL = { poupanca: ["Poupança", "Poupança"], cdb: ["CDB", "Renda fixa"], lci: ["LCI", "Renda fixa"], lca: ["LCA", "Renda fixa"], tesouro: ["Tesouro Direto", "Renda fixa"], selic: ["Tesouro Selic", "Renda fixa"],
+  acoes: ["Ações", "Renda variável"], acao: ["Ações", "Renda variável"], fii: ["Fundos imobiliários", "Renda variável"], fiis: ["Fundos imobiliários", "Renda variável"], fundo: ["Fundo de investimento", "Renda fixa"], fundos: ["Fundo de investimento", "Renda fixa"],
+  cripto: ["Cripto", "Criptomoeda"], criptomoeda: ["Cripto", "Criptomoeda"], bitcoin: ["Bitcoin", "Criptomoeda"], btc: ["Bitcoin", "Criptomoeda"], ethereum: ["Ethereum", "Criptomoeda"], previdencia: ["Previdência", "Renda fixa"], caixinha: ["Caixinha", "Renda fixa"], cofrinho: ["Cofrinho", "Renda fixa"] };
+
 function numeroDe(t) {
-  t = t.replace(/^r\$/, "").replace(/[.,;:!?]+$/, "");
+  t = String(t).toLowerCase().replace(/[;:!?)]+$/, "").replace(/^r\$/, "").replace(/(reais|real|conto|contos|pila)$/, "").replace(/[.,]$/, "");
   if (/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(t)) return Number(t.replace(/\./g, "").replace(",", "."));
+  if (/^\d{1,3}(,\d{3})+(\.\d{1,2})$/.test(t)) return Number(t.replace(/,/g, ""));
   if (/^\d+,\d{1,2}$/.test(t)) return Number(t.replace(",", "."));
   if (/^\d+\.\d{1,2}$/.test(t)) return Number(t);
   if (/^\d+$/.test(t)) return Number(t);
-  if (/^\d+(,\d+)?k$/.test(t)) return Number(t.slice(0, -1).replace(",", ".")) * 1000;
+  if (/^\d+([.,]\d+)?k$/.test(t)) return Number(t.slice(0, -1).replace(",", ".")) * 1000;
   return null;
 }
 function dataDe(t) {
-  const m = t.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/); if (!m) return null;
-  let a = m[3] ? +m[3] : hoje.getFullYear(); if (a < 100) a += 2000;
+  const m = String(t).match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/); if (!m) return null;
+  let a = m[3] ? +m[3] : +ISO_HOJE.slice(0, 4); if (a < 100) a += 2000;
   const mes = +m[2], dia = +m[1];
   if (mes < 1 || mes > 12 || dia < 1) return null;
   const k = ym(a, mes - 1);
   return dia > ultimoDia(k) ? null : `${k}-${pad(dia)}`;
 }
+/* Valor por extenso: "trinta e cinco", "mil e quinhentos", "dois mil", "cinquenta reais e vinte centavos" */
+function extensoEm(w, i, { centavos = true } = {}) {
+  let total = 0, atual = 0, j = i, usados = 0, ult = -1, ordemAnt = 9, quebrou = false;
+  while (j < w.length) {
+    const t = w[j];
+    if (t in NUM_PAL) {
+      const v = NUM_PAL[t], ordem = v >= 100 ? 3 : v >= 20 ? 2 : 1;
+      if (usados && ordem >= ordemAnt) { quebrou = true; break; }          // "trinta e cinco e cinquenta": o resto são centavos
+      atual += v; usados++; ult = j; j++; ordemAnt = ordem; continue;
+    }
+    if (t === "mil") { atual = (atual || 1) * 1000; total += atual; atual = 0; usados++; ult = j; j++; ordemAnt = 9; continue; }
+    if (t === "e" && usados && j + 1 < w.length && (w[j + 1] in NUM_PAL || w[j + 1] === "mil")) { j++; continue; }
+    break;
+  }
+  if (!usados) return null;
+  let valor = total + atual, fim = ult + 1, cent = false;
+  if (quebrou && centavos && w[ult + 1] === "e") {
+    const c = extensoEm(w, ult + 2, { centavos: false });
+    if (c && c.valor < 100) { valor += c.valor / 100; fim = c.fim; cent = true; if (/^centavos?$/.test(w[fim] || "")) fim++; }
+  }
+  if (usados === 1 && !cent && ["um", "uma"].includes(w[i]) && !MOEDA_PAL.includes(w[i + 1]) && w[i + 1] !== "mil") return null;
+  const forte = MOEDA_PAL.includes(w[fim]) || usados > 1 || cent;
+  if (MOEDA_PAL.includes(w[fim]) && w[fim + 1] === "e") {
+    const c = extensoEm(w, fim + 2);
+    if (c && /^centavos?$/.test(w[c.fim] || "")) { valor += c.valor / 100; fim = c.fim + 1; }
+  }
+  return { valor, fim, forte };
+}
+/* Melhor categoria para as palavras: frase mais longa vence; empate = a que aparece primeiro */
+function melhorCategoria(w, ok) {
+  const cats = state.config.categorias;
+  let melhor = null;
+  const propor = (c, score, i, e) => { if (!melhor || score > melhor.score || (score === melhor.score && i < melhor.i)) melhor = { c, score, i, e }; };
+  const casa = (i, toks) => toks.every((p, k) => ok(i + k) && w[i + k] && mesmoTok(w[i + k], p));
+  const nomes = cats.map(c => ({ c, t: semAcento(c).split(/\s+/).map(normTok).filter(Boolean) }));
+  for (let i = 0; i < w.length; i++) {
+    if (!ok(i) || !w[i]) continue;
+    const vistos = new Set();
+    for (const k of [w[i], singular(w[i])]) for (const e of DIC.idx.get(k) || []) {
+      if (vistos.has(e)) continue; vistos.add(e);
+      if (!casa(i, e.toks)) continue;
+      const c = categoriaExistente(e.cat, e.alt); if (!c) continue;
+      propor(c, e.toks.length * 2 + (e.fraco ? 0 : 1), i, e);
+    }
+    for (const { c, t } of nomes) {
+      if (!t.length) continue;
+      if (casa(i, t)) propor(c, t.length * 2 + 1.5, i, null);
+      else if (t.length > 1 && w[i].length >= 4 && mesmoTok(w[i], t[0])) propor(c, 2.5, i, null);
+    }
+  }
+  return melhor;
+}
+/* Deixa a descrição bonita: acentos que faltaram ("almoco" → "almoço") e siglas em maiúsculas */
+function caprichar(desc) {
+  const out = desc.split(" ").map(p => {
+    const n = normTok(p), lp = p.toLowerCase();
+    if (SIGLAS.has(n) && p === lp) return p.toUpperCase();
+    if (p === semAcento(p) && p === lp && DIC.acentos.has(n)) { const j = lp.indexOf(n); if (j >= 0) return p.slice(0, j) + DIC.acentos.get(n) + p.slice(j + n.length); }
+    return p;
+  }).join(" ");
+  return out.charAt(0).toUpperCase() + out.slice(1);
+}
+
+/* Interpreta UMA frase. forcar: "gasto", "receita" ou "mov:aporte" etc. (para trocar o tipo) */
 function interpretar(texto, { forcar = null } = {}) {
   const orig = String(texto || "").trim().replace(/\s+/g, " ");
   if (!orig) return null;
-  const toks = orig.split(" "), n = toks.map(t => { const x = semAcento(t); return /\d/.test(x) ? x : x.replace(/[.,;:!?]+$/, ""); });
-  const usado = toks.map(() => false);
-  const usar = i => { if (i < 0 || i >= n.length) return; usado[i] = true; if (i > 0 && !usado[i - 1] && PAL.stop.includes(n[i - 1])) usado[i - 1] = true; };
-  const livre = i => !usado[i];
-  const idx = lista => n.findIndex((t, i) => livre(i) && lista.includes(t));
-  const r = { kind: "gasto", valor: null, data: ISO_HOJE, descricao: "", categoria: "", forma: null, cartaoId: null, parcelas: 1, tipoReceita: "outras", movTipo: null, destino: "geral", conta: null };
-  // quando
-  n.forEach((t, i) => {
-    if (!livre(i)) return;
-    const sem = t.replace(/-?feira$/, "");
-    if (t === "hoje") { r.data = ISO_HOJE; usar(i); }
-    else if (t === "ontem") { r.data = addDias(ISO_HOJE, -1); usar(i); }
-    else if (t === "anteontem") { r.data = addDias(ISO_HOJE, -2); usar(i); }
-    else if (t === "amanha") { r.data = addDias(ISO_HOJE, 1); usar(i); }
-    else if (/^\d{1,2}\/\d{1,2}(\/\d{2,4})?$/.test(t)) { const d = dataDe(t); if (d) { r.data = d; usar(i); } }
-    else if (t === "dia" && /^\d{1,2}$/.test(n[i + 1] || "") && +n[i + 1] >= 1 && +n[i + 1] <= 31) { r.data = diaNoMes(YM_HOJE, +n[i + 1]); usar(i); usar(i + 1); }
-    else if (PAL.semana.includes(sem)) { const w = PAL.semana.indexOf(sem), hojeW = new Date(ISO_HOJE + "T12:00:00Z").getUTCDay(); r.data = addDias(ISO_HOJE, -((hojeW - w + 7) % 7)); usar(i); if (n[i + 1] === "feira") usar(i + 1); }
-  });
-  // parcelas
-  n.forEach((t, i) => {
-    if (!livre(i)) return;
-    let m;
-    if ((m = t.match(/^(\d{1,2})x$/))) { r.parcelas = +m[1]; usar(i); }
-    else if (/^\d{1,2}$/.test(t) && ["x", "vezes", "parcelas"].includes(n[i + 1])) { r.parcelas = +t; usar(i); usar(i + 1); }
-  });
-  r.parcelas = Math.min(24, Math.max(1, r.parcelas));
-  // valor: prefere o que tem centavos ou R$; senão, o último número
+  const toks = orig.split(" ");
+  const low = toks.map(t => t.toLowerCase());
+  const w = toks.map(normTok);
+  // usado: false = livre · true = consumido · "verbo" = fora da descrição, mas ajuda a achar a categoria · "desc" = fica na descrição
+  const usado = toks.map(t => (normTok(t) === "" ? "pont" : false));
+  const livre = i => i >= 0 && i < w.length && !usado[i] && w[i] !== "";
+  const usar = (i, n = 1, como = true) => {
+    for (let k = i; k < i + n && k < w.length; k++) if (usado[k] !== "desc") usado[k] = como;
+    if (i > 0 && !usado[i - 1] && KW.stop.has(w[i - 1])) usado[i - 1] = true;
+  };
+  const casaEm = (i, f) => f.every((p, k) => livre(i + k) && mesmoTok(w[i + k], p));
+  const acha = (lista, { usarComo = null } = {}) => {
+    for (let i = 0; i < w.length; i++) for (const f of lista) if (casaEm(i, f)) { if (usarComo) usar(i, f.length, usarComo); return { i, n: f.length }; }
+    return null;
+  };
+  const consumir = (lista, como = true) => { let a, n = 0; while ((a = acha(lista)) && n++ < 30) usar(a.i, a.n, como); };
+  const r = { kind: "gasto", cue: false, valor: null, data: ISO_HOJE, dataDita: false, descricao: "", categoria: "", catReconhecida: true,
+    forma: null, formaDita: false, cartaoId: null, parcelas: 1, tipoReceita: "outras", movTipo: null, destino: "geral", invId: null, invNovo: null,
+    conta: null, recorrente: false, dia: null, auto: null, aviso: "", info: "", texto: orig };
+
+  // 0) expressões que parecem forma de pagamento, mas são o próprio gasto ("crédito no celular", "vale transporte")
+  KW.protegidas.forEach(f => { for (let i = 0; i < w.length; i++) if (f.every((p, k) => w[i + k] && mesmoTok(w[i + k], p))) for (let k = 0; k < f.length; k++) usado[i + k] = "desc"; });
+
+  // 1) quando: hoje, ontem, amanhã, dia 5, 5 de novembro, 05/11, sexta, há 3 dias, semana passada, todo dia 10
+  for (let i = 0; i < w.length; i++) {
+    if (!livre(i)) continue;
+    const t = w[i], sem = t.replace(/feira$/, "");
+    const fixar = (d, n) => { r.data = d; r.dataDita = true; usar(i, n); };
+    if (t === "hoje") fixar(ISO_HOJE, 1);
+    else if (t === "ontem") fixar(addDias(ISO_HOJE, -1), 1);
+    else if (t === "anteontem") fixar(addDias(ISO_HOJE, -2), 1);
+    else if (t === "depois" && w[i + 1] === "de" && w[i + 2] === "amanha") fixar(addDias(ISO_HOJE, 2), 3);
+    else if (t === "amanha") fixar(addDias(ISO_HOJE, 1), 1);
+    else if (/^\d{1,2}\/\d{1,2}(\/\d{2,4})?$/.test(low[i])) { const d = dataDe(low[i]); if (d) fixar(d, 1); }
+    else if (/^\d{1,2}(h|h\d{2}|:\d{2})$/.test(low[i])) usar(i);                       // horário: não é valor
+    else if (t === "semana" && w[i + 1] === "passada") fixar(addDias(ISO_HOJE, -7), 2);
+    else if (t === "mes" && w[i + 1] === "passado") fixar(diaNoMes(addMes(YM_HOJE, -1), +ISO_HOJE.slice(8)), 2);
+    else if ((t === "ha" || t === "faz") && /^\d{1,2}$/.test(w[i + 1] || "") && /^dias?$/.test(w[i + 2] || "")) fixar(addDias(ISO_HOJE, -(+w[i + 1])), 3);
+    else if (/^\d{1,2}$/.test(t) && /^dias?$/.test(w[i + 1] || "") && w[i + 2] === "atras") fixar(addDias(ISO_HOJE, -(+t)), 3);
+    else if (t === "todo" && w[i + 1] === "dia" && /^\d{1,2}$/.test(w[i + 2] || "") && +w[i + 2] >= 1 && +w[i + 2] <= 31) { r.recorrente = true; r.dia = +w[i + 2]; usar(i, 3); }
+    else if (t === "dia" && /^\d{1,2}$/.test(w[i + 1] || "") && +w[i + 1] >= 1 && +w[i + 1] <= 31) {
+      const dia = +w[i + 1], mesN = w[i + 2] === "de" && MESES_N[w[i + 3]];
+      if (mesN) fixar(diaNoMes(ym(+ISO_HOJE.slice(0, 4), mesN - 1), dia), 4); else fixar(diaNoMes(YM_HOJE, dia), 2);
+    }
+    else if (/^\d{1,2}$/.test(t) && w[i + 1] === "de" && MESES_N[w[i + 2]] && +t >= 1 && +t <= 31) fixar(diaNoMes(ym(+ISO_HOJE.slice(0, 4), MESES_N[w[i + 2]] - 1), +t), 3);
+    else if (SEMANA.includes(sem) && (sem === "sabado" || sem === "domingo" || t.endsWith("feira") || w[i + 1] === "feira" || ANTES_DIA.has(w[i - 1]) || ["passada", "passado", "que"].includes(w[i + 1]) || i === w.length - 1)) {
+      const alvo = SEMANA.indexOf(sem), hw = new Date(ISO_HOJE + "T12:00:00Z").getUTCDay();
+      const n = w[i + 1] === "feira" ? 2 : 1;
+      const prox = ["proxima", "proximo"].includes(w[i - 1]) || (w[i + n] === "que" && w[i + n + 1] === "vem");
+      const pass = ["passada", "passado"].includes(w[i + n]);
+      let d = prox ? addDias(ISO_HOJE, ((alvo - hw + 7) % 7) || 7) : addDias(ISO_HOJE, -((hw - alvo + 7) % 7));
+      if (pass && d === ISO_HOJE) d = addDias(ISO_HOJE, -7);
+      if (["proxima", "proximo", "ultima", "ultimo"].includes(w[i - 1])) usado[i - 1] = true;
+      fixar(d, n + (pass ? 1 : 0) + (w[i + n] === "que" ? 2 : 0));
+    }
+  }
+  if (acha(KW.recorrente, { usarComo: true })) r.recorrente = true;
+
+  // 2) parcelas: 6x, 6 x, em 6 vezes, 6 parcelas (de 50), parcelado em 6, à vista, sem juros
+  for (let i = 0; i < w.length; i++) {
+    if (!livre(i)) continue;
+    let m, n = 0, fim = i;
+    if ((m = low[i].match(/^(\d{1,2})x$/))) { n = +m[1]; fim = i + 1; }
+    else if (/^\d{1,2}$/.test(w[i]) && ["x", "vezes", "parcelas", "parcela", "vez", "prestacoes"].includes(w[i + 1])) { n = +w[i]; fim = i + 2; }
+    else if (/^parcel/.test(w[i]) && w[i + 1] === "em" && /^\d{1,2}x?$/.test(low[i + 2] || "")) { n = parseInt(low[i + 2], 10); fim = i + 3; if (["x", "vezes"].includes(w[fim])) fim++; }
+    else if (w[i] === "avista" || (w[i] === "a" && w[i + 1] === "vista")) { r.parcelas = 1; usar(i, w[i] === "a" ? 2 : 1); continue; }
+    if (!n) continue;
+    r.parcelas = n; usar(i, fim - i);
+    if (w[fim] === "sem" && w[fim + 1] === "juros") { usar(fim, 2); fim += 2; }
+    if (w[fim] === "de" && numeroDe(low[fim + 1]) != null) { r.valorParcela = numeroDe(low[fim + 1]); usar(fim, 2); if (MOEDA_PAL.includes(w[fim + 2])) usar(fim + 2); }
+  }
+  r.parcelas = Math.min(24, Math.max(1, r.parcelas || 1));
+
+  // 3) valor: prefere o que tem R$, "reais" ou centavos; senão o último número; também por extenso
   const cand = [];
-  n.forEach((t, i) => {
-    if (!livre(i) || t === "r$") return;
-    let v = numeroDe(t); if (v == null) return;
-    const forte = t.startsWith("r$") || n[i - 1] === "r$" || /[.,]\d{1,2}$/.test(t);
-    if (n[i + 1] === "mil") v *= 1000;
-    cand.push({ i, v, forte });
-  });
-  const esc = cand.find(c => c.forte) || cand[cand.length - 1];
-  if (esc) { r.valor = round2(esc.v); usar(esc.i); if (n[esc.i + 1] === "mil") usar(esc.i + 1); }
-  n.forEach((t, i) => { if (t === "r$") usado[i] = true; });
-  // o que é
-  if (idx(PAL.aporte) >= 0) { r.kind = "mov"; r.movTipo = "aporte"; }
-  else if (idx(PAL.resgate) >= 0) { r.kind = "mov"; r.movTipo = "resgate"; }
-  else if (idx(PAL.rend) >= 0) { r.kind = "mov"; r.movTipo = "rendimento"; }
-  else if (idx(["fatura"]) >= 0) r.kind = "fatura";
-  else if (idx(PAL.sal) >= 0) { r.kind = "receita"; r.tipoReceita = "salario"; }
-  else if (idx(PAL.rec) >= 0) { r.kind = "receita"; r.tipoReceita = "outras"; }
-  if (forcar && (r.kind === "gasto" || r.kind === "receita")) r.kind = forcar;
-  // cartão pelo nome
-  state.cartoes.forEach(c => {
-    const w = semAcento(c.nome).split(/\s+/)[0], i = n.findIndex((t, j) => livre(j) && t === w);
-    if (i >= 0 && !r.cartaoId) { r.cartaoId = c.id; usar(i); if (r.kind === "gasto" || r.kind === "conta") r.forma = "credito"; }
-  });
+  for (let i = 0; i < w.length; i++) {
+    if (!livre(i) || low[i] === "r$") continue;
+    let v = numeroDe(low[i]);
+    if (v != null) {
+      let n = 1, forte = /^r\$/.test(low[i]) || low[i - 1] === "r$" || /[.,]/.test(low[i].replace(/[.,]$/, "")) || /(reais|real)$/.test(low[i]) || /k$/.test(low[i]);
+      if (MOEDA_PAL.includes(w[i + 1])) forte = true;
+      if (w[i + 1] === "mil") { v *= 1000; n = 2; forte = true; }
+      if (/^centavos?$/.test(w[i + 1] || "")) { v /= 100; n = 2; forte = true; }
+      if (low[i] === "99" && w.some((x, k) => k > i && /^\d/.test(x))) continue;          // "99" é o app de corrida
+      cand.push({ i, n, v, forte });
+      continue;
+    }
+    if (w[i] in NUM_PAL || w[i] === "mil") {
+      const e = extensoEm(w, i);
+      if (e) { cand.push({ i, n: e.fim - i, v: e.valor, forte: e.forte, extenso: true }); i = e.fim - 1; }
+    }
+  }
+  if (r.valorParcela) r.valor = round2(r.valorParcela * r.parcelas);
+  else {
+    const esc = cand.find(c => c.forte && !c.extenso) || cand.filter(c => !c.extenso).pop() || cand.find(c => c.forte) || cand.pop();
+    if (esc) {
+      r.valor = round2(esc.v); usar(esc.i, esc.n);
+      let j = esc.i + esc.n;
+      if (MOEDA_PAL.includes(w[j])) { usar(j); j++; }
+      // "50 reais e 30 centavos"
+      if (w[j] === "e" && /^\d{1,2}$/.test(w[j + 1] || "") && /^centavos?$/.test(w[j + 2] || "")) { r.valor = round2(r.valor + (+w[j + 1]) / 100); usar(j, 3); }
+      // "2 pastéis": número pequeno no começo, colado numa palavra, é quantidade (para separar vários lançamentos)
+      r.valorFraco = !esc.forte && esc.i === 0 && Number.isInteger(esc.v) && esc.v <= 12 && !!w[esc.i + esc.n] && !KW.stop.has(w[esc.i + esc.n]);
+    }
+  }
+  low.forEach((t, i) => { if (t === "r$" && !usado[i]) usado[i] = true; });
+
+  // 4) o que é
+  const temRec = acha(KW.receitaVerbo), temGasto = acha(KW.gastoVerbo), temSal = acha(KW.salario), temOutras = acha(KW.outrasReceitas);
+  const temInv = acha(KW.invest), temAporte = acha(KW.aporte), temAporteDest = acha(KW.aporteComDestino), temResg = acha(KW.resgate), temRend = acha(KW.rendimento);
+  const temPassado = !!acha(KW.passado), temRecPassado = !!acha(KW.receitaPassado), pagaOutro = !!acha(KW.pagaSalarioDe);
+  const verboResg = temResg ? w[temResg.i] : "";
+  const gastou = temGasto && !(["fiz", "dei"].includes(w[temGasto.i]) && (temSal || temOutras)) ? temGasto : null;
+  // só palavras de investimento ("reserva 300", "cdb 1000") = aporte
+  const cobreInv = new Set();
+  for (let i = 0; i < w.length; i++) for (const f of KW.invest) if (casaEm(i, f)) for (let k = 0; k < f.length; k++) cobreInv.add(i + k);
+  const conteudo = w.map((t, i) => i).filter(i => livre(i) && !KW.stop.has(w[i]));
+  const soInvest = conteudo.length > 0 && conteudo.every(i => cobreInv.has(i));
+  r.cue = true;
+  if (temRend && (temInv || !gastou)) { r.kind = "mov"; r.movTipo = "rendimento"; }
+  else if (temResg && (temInv || /^resgat/.test(verboResg))) { r.kind = "mov"; r.movTipo = "resgate"; }
+  else if (temResg && /^(saquei|saque|sacar)$/.test(verboResg) && !gastou) { r.kind = "info"; r.info = "Saque não muda o seu dinheiro: ele só sai do banco e vai para a carteira. Nada a registrar."; }
+  else if (temAporte || (temAporteDest && temInv) || (gastou && /^compr/.test(w[gastou.i]) && acha(KW.investForte)) || (soInvest && !gastou && !temRec)) { r.kind = "mov"; r.movTipo = "aporte"; }
+  else if (acha(KW.entreContas)) { r.kind = "info"; r.info = "Transferência entre contas suas não muda o seu dinheiro. Nada a registrar."; }
+  else if (acha(KW.fatura)) r.kind = "fatura";
+  else if (temRec) { r.kind = "receita"; r.tipoReceita = temSal ? "salario" : "outras"; }
+  else if (gastou) r.kind = "gasto";
+  else if (temSal && !pagaOutro) { r.kind = "receita"; r.tipoReceita = "salario"; }
+  else if (temOutras && !pagaOutro) { r.kind = "receita"; r.tipoReceita = "outras"; }
+  else r.cue = false;
+  if (forcar) {
+    if (forcar.startsWith("mov:")) { r.kind = "mov"; r.movTipo = forcar.slice(4); }
+    else { r.kind = forcar; if (forcar === "receita") r.tipoReceita = temSal ? "salario" : "outras"; }
+    r.cue = true;
+  }
+
+  // 5) cartão pelo nome ("no nubank", "cartão do itaú"): primeiro o nome inteiro, depois uma palavra marcante do nome
+  const GENERICO = new Set("cartao cartoes credito debito visa master mastercard elo black gold platinum infinite internacional card meu minha pessoal principal".split(" "));
+  let cartaoDito = null;
+  const nomesCartao = state.cartoes.map(c => ({ c, t: semAcento(c.nome).split(/\s+/).map(normTok).filter(Boolean) }));
+  for (const { c, t } of nomesCartao.slice().sort((a, b) => b.t.length - a.t.length)) if (t.length && acha([t], { usarComo: true })) { cartaoDito = c; break; }
+  if (!cartaoDito) for (const { c, t } of nomesCartao) {
+    const marc = t.filter(x => x.length >= 2 && !GENERICO.has(x) && !KW.stop.has(x) && !DIC.idx.has(x));
+    if (marc.length && acha(marc.map(x => [x]), { usarComo: true })) { cartaoDito = c; break; }
+  }
+  // nomes de banco que não são cartão seu saem da descrição ("caiu no itaú", "pix pelo nubank")
+  let bancoDito = "";
+  for (let i = 0; i < w.length; i++) {
+    const tira = f => { bancoDito = bancoDito || toks.slice(i, i + f.length).join(" "); usar(i, f.length); };
+    for (const f of KW.bancoForte) if (casaEm(i, f)) tira(f);
+    if (i > 0 && KW.preposicao.has(w[i - 1])) for (const f of KW.bancoFraco) if (casaEm(i, f)) tira(f);
+  }
+
+  // 6) receita: VA/VR, e estorno no cartão (esse volta na fatura, não no caixa)
   if (r.kind === "receita") {
-    const va = idx(["va", "alimentacao"]), vr = idx(["vr", "refeicao"]), vale = idx(["vale"]);
-    if (vr >= 0) { r.tipoReceita = "vr"; usar(vr); } else if (va >= 0 || vale >= 0) { r.tipoReceita = "va"; if (va >= 0) usar(va); }
-    if (vale >= 0) usar(vale);
+    if (/estorn|reembols/.test(semAcento(orig)) && (cartaoDito || acha(pal("no cartão|cartão|crédito|fatura")))) {
+      r.kind = "info"; r.info = "Estorno no cartão volta na fatura, não no caixa: edite ou exclua a compra original do cartão.";
+    } else {
+      const vr = acha(pal("vale refeição|cartão refeição|ticket refeição|vr|refeição")), va = acha(pal("vale alimentação|cartão alimentação|ticket alimentação|va|alimentação|vale|ticket|alelo|sodexo|pluxee|flash|caju|swile|benefício"));
+      if (vr) { r.tipoReceita = "vr"; usar(vr.i, vr.n); } else if (va) { r.tipoReceita = "va"; usar(va.i, va.n); }
+      ["pix", "dinheiro"].forEach(f => consumir(KW.formas.find(x => x[0] === f)[1]));
+    }
   }
+
+  // 7) forma de pagamento (VA/VR > débito > Pix > dinheiro > crédito)
+  const auto = acha(KW.automatico, { usarComo: true });
+  if (r.kind === "gasto" || r.kind === "fatura") {
+    const achadas = KW.formas.map(([f, lista]) => ({ f, a: acha(lista) })).filter(x => x.a);
+    if (achadas.length) { r.forma = achadas[0].f; r.formaDita = true; }
+    KW.formas.forEach(([, lista]) => consumir(lista));
+    if (cartaoDito && !["debito", "pix", "dinheiro", "vavr"].includes(r.forma)) { r.forma = "credito"; r.formaDita = true; }
+    if (r.forma === "credito" && cartaoDito) r.cartaoId = cartaoDito.id;
+    if (!r.formaDita && /\b(transferi|mandei|enviei)\b/.test(semAcento(orig))) { r.forma = "pix"; r.formaDita = true; }
+    if (auto && !r.formaDita) { r.forma = "debito"; r.formaDita = true; }
+    if (r.parcelas > 1 && r.kind === "gasto") { r.forma = "credito"; r.formaDita = true; }
+  }
+
+  // 8) verbos saem da descrição (mas ainda ajudam a achar a categoria: "abasteci")
+  [KW.gastoVerbo, KW.receitaVerbo, KW.aporte, KW.aporteComDestino, KW.resgate, KW.rendimento].forEach(l => consumir(l, "verbo"));
+
+  // 9) investimentos: qual e para onde
   if (r.kind === "mov") {
-    const m = semAcento(state.objetivos.meta.nome).split(/\s+/).filter(w => w.length >= 4);
-    const iR = idx(["reserva", "emergencia"]), iM = n.findIndex((t, i) => livre(i) && (t === "meta" || m.includes(t)));
-    if (iR >= 0) { r.destino = "reserva"; usar(iR); } else if (iM >= 0) { r.destino = "meta"; usar(iM); }
+    const metaT = semAcento(state.objetivos.meta.nome).split(/\s+/).map(normTok).filter(x => x.length >= 4 && !KW.stop.has(x));
+    const iR = acha(pal("reserva de emergência|reserva|emergência")), iM = acha([["meta"], ["objetivo"], ...metaT.map(x => [x])]);
+    if (iR) { r.destino = "reserva"; usar(iR.i, iR.n); } else if (iM) { r.destino = "meta"; usar(iM.i, iM.n); }
+    const porNome = state.investimentos.map(inv => ({ inv, t: semAcento(inv.nome).split(/\s+/).map(normTok).filter(x => x.length >= 3 && !KW.stop.has(x)) }))
+      .filter(o => o.t.length && o.t.every(x => w.some(y => mesmoTok(y, x)))).sort((a, b) => b.t.length - a.t.length)[0];
+    const tipoI = w.findIndex((x, i) => TIPOS_PAL[x] && usado[i] !== true);
+    const tipoInv = tipoI >= 0 ? TIPOS_PAL[w[tipoI]] : null;
+    if (porNome) { r.invId = porNome.inv.id; r.destino = porNome.inv.destino; porNome.t.forEach(x => { const i = w.findIndex(y => mesmoTok(y, x)); if (i >= 0) usar(i); }); }
+    else {
+      const doDestino = state.investimentos.filter(i => i.destino === r.destino);
+      const chaveTipo = tipoInv ? semAcento(tipoInv[0]).split(" ")[0] : "";
+      const pelaPalavra = tipoInv ? doDestino.filter(i => semAcento(`${i.nome} ${i.tipo}`).includes(chaveTipo)) : [];
+      if (pelaPalavra.length === 1) r.invId = pelaPalavra[0].id;
+      else if (doDestino.length === 1 && !(tipoInv && r.movTipo === "aporte")) r.invId = doDestino[0].id;
+      else if (!doDestino.length && r.movTipo !== "aporte" && state.investimentos.length === 1 && !iR && !iM) { r.invId = state.investimentos[0].id; r.destino = state.investimentos[0].destino; }
+      else if (r.movTipo === "aporte" && (!doDestino.length || (tipoInv && !pelaPalavra.length))) {
+        const nome = tipoInv ? tipoInv[0] : r.destino === "reserva" ? "Reserva de emergência" : r.destino === "meta" ? state.objetivos.meta.nome : "Investimento";
+        r.invNovo = { nome, tipo: tipoInv ? tipoInv[1] : TIPOS_INVEST[0], destino: r.destino };
+      }
+    }
+    if (tipoI >= 0) usar(tipoI);
+    consumir(KW.invest);
   }
-  if (r.kind === "gasto") {
-    for (const [f, ws] of PAL.formas) { const i = idx(ws); if (i >= 0) { if (!r.forma) r.forma = f; usar(i); } }
-    if (r.forma === "debito") { const i = idx(["cartao"]); if (i >= 0) usar(i); }
+
+  // 10) fatura: qual cartão e qual fatura (a mais antiga em aberto)
+  if (r.kind === "fatura") {
+    consumir(KW.fatura);
+    let c = cartaoDito;
+    const abertas = faturasAte(addMes(YM_HOJE, 1)).filter(f => f.restante > 0);
+    if (!c && state.cartoes.length === 1) c = state.cartoes[0];
+    if (!c && new Set(abertas.map(f => f.cartao.id)).size === 1) c = abertas[0].cartao;
+    if (c) {
+      r.cartaoId = c.id;
+      const f = abertas.find(x => x.cartao.id === c.id) || fatura(c, YM_HOJE);
+      r.faturaRef = f.ref; r.faturaVenc = f.vencimento; r.faturaAberto = f.restante;
+      if (!(r.valor > 0) && f.restante > 0) r.valor = f.restante;
+    }
+    r.forma = ["debito", "dinheiro"].includes(r.forma) ? r.forma : "pix";
   }
-  if (r.parcelas > 1 && r.kind === "gasto") r.forma = "credito";
-  // descrição: o que sobrou
-  const resto = toks.filter((t, i) => livre(i) && !PAL.verbos.includes(n[i]));
-  const ehStop = t => PAL.stop.includes(semAcento(t));
+
+  // 11) descrição: o que sobrou
+  const resto = toks.map((t, i) => (usado[i] === true || usado[i] === "verbo" ? null : t)).filter(t => t != null);
+  const ehStop = t => KW.stop.has(normTok(t)) || normTok(t) === "";
   while (resto.length && ehStop(resto[0])) resto.shift();
   while (resto.length && ehStop(resto[resto.length - 1])) resto.pop();
-  r.descricao = resto.join(" ").replace(/[.,;:]+$/, "");
-  r.descricao = r.descricao.charAt(0).toUpperCase() + r.descricao.slice(1);
-  // pagar uma conta cadastrada? (ex.: “paguei luz 160”)
-  if (r.kind === "gasto") {
-    const pagou = n.some(t => ["paguei", "conta", "boleto"].includes(t));
-    const rt = semAcento(r.descricao).split(/\s+/).filter(t => t && !PAL.stop.includes(t) && t !== "conta");
-    const achou = contasParaPagar().find(c => {
-      const nt = semAcento(c.nome).split(/\s+/).filter(t => t && !PAL.stop.includes(t) && t !== "conta");
-      return nt.length && (nt.join(" ") === rt.join(" ") || (pagou && nt.every(t => rt.includes(t))));
-    });
-    if (achou) { r.kind = "conta"; r.conta = achou; if (!(r.valor > 0)) r.valor = achou.planejado; if (r.forma === "vavr") r.forma = null; }
+  r.descricao = resto.join(" ").replace(/^[-–:,.;\s]+|[-–:,.;\s]+$/g, "");
+
+  // 12) é uma conta que você já cadastrou? ("paguei a conta de luz", "boleto da internet", "luz 160")
+  if (r.kind === "gasto" && !r.recorrente) {
+    const pagou = !!temGasto || /\b(conta|boleto)\b/.test(semAcento(orig));
+    const sig = n => semAcento(n).split(/\s+/).map(normTok).filter(t => t && !KW.stop.has(t) && !["conta", "boleto", "fatura"].includes(t));
+    const dt = sig(r.descricao);
+    const achou = dt.length ? contasParaPagar().find(c => { const nt = sig(c.nome); return nt.length && (nt.join(" ") === dt.join(" ") || (pagou && nt.every(t => dt.some(x => mesmoTok(x, t))))); }) : null;
+    if (achou) {
+      r.kind = "conta"; r.conta = achou;
+      if (!(r.valor > 0)) r.valor = achou.planejado;
+      if (r.forma === "vavr") { r.forma = null; r.formaDita = false; }
+      if (r.forma === "credito" && !r.cartaoId) r.cartaoId = (state.cartoes[0] || {}).id || null;
+    } else if (dt.length) {
+      const jaPaga = ocorrenciasMes(YM_HOJE).find(c => c.pago != null && sig(c.nome).join(" ") === dt.join(" "));
+      if (jaPaga) r.aviso = `A conta “${jaPaga.nome}” deste mês já está paga${jaPaga.autoPaga ? " (automático)" : ""}. Se for a mesma, não precisa lançar.`;
+    }
   }
-  if (r.kind === "gasto") {
-    const mem = memoria(), chave = semAcento(r.descricao).trim();
-    const m1 = mem.porDesc.get(chave) || mem.porPalavra.get(chave.split(" ")[0]);
-    const cats = state.config.categorias, acha = nome => cats.find(c => semAcento(c) === semAcento(nome));
-    let cat = m1 && m1.kind === "gasto" && cats.includes(m1.categoria) ? m1.categoria : null;
-    if (!cat && /mercado livre/.test(n.join(" "))) cat = acha("Compras online");
-    if (!cat) for (const t of n) { const c = cats.find(c => semAcento(c) === t || (t.length >= 4 && semAcento(c).split(" ")[0] === t)); if (c) { cat = c; break; } }
-    if (!cat) for (const [c, ws] of Object.entries(DIC_CAT)) { const l = ws.split(" "); if (n.some(t => l.includes(t) || (t.length > 3 && l.includes(t.replace(/e?s$/, ""))))) { cat = acha(c); if (cat) break; } }
-    r.categoria = cat || acha("Outros") || cats[0];
-    if (!r.forma) r.forma = (m1 && m1.kind === "gasto" && m1.forma) || mem.formaComum;
-    if (!r.descricao) r.descricao = r.categoria;
+
+  // 13) categoria: o que você já usou antes → nome de categoria → dicionário → Outros
+  if (r.kind === "gasto" || r.kind === "conta") {
+    const mem = memoria(), chave = semAcento(r.descricao).trim().replace(/\s+/g, " ");
+    const ehGasto = m => m && m.kind === "gasto" ? m : null;
+    const m1 = chave ? ehGasto(mem.porDesc.get(chave)) : null, m2 = chave ? ehGasto(mem.porPalavra.get(chave.split(" ")[0])) : null;
+    const cats = state.config.categorias;
+    const doDic = melhorCategoria(w, i => usado[i] !== true);
+    let cat = m1 && cats.includes(m1.categoria) && (m1.categoria !== "Outros" || !doDic) ? m1.categoria : null;
+    if (!cat && r.kind === "conta" && cats.includes(r.conta.categoria)) cat = r.conta.categoria;
+    if (!cat && doDic) cat = doDic.c;
+    if (!cat && m2 && cats.includes(m2.categoria)) cat = m2.categoria;
+    if (!cat) { r.catReconhecida = false; cat = categoriaExistente("Outros") || cats[0]; }
+    r.categoria = cat;
+    if (r.kind === "gasto" && !r.forma) {
+      const lembrada = m1 ? m1 : m2 && m2.categoria === cat ? m2 : null;
+      let f = (lembrada && lembrada.forma) || mem.formaCaixa || "pix";
+      if (f === "vavr" && !["Alimentação", "Restaurante", "Mercado"].includes(cat)) f = mem.formaCaixa || "pix";
+      if (f === "credito" && !state.cartoes.length) f = mem.formaCaixa || "pix";
+      r.forma = f;
+    }
+    if (!r.descricao) r.descricao = r.kind === "conta" ? r.conta.nome : doDic && doDic.e && usado[doDic.i] !== "verbo" ? doDic.e.bonito : r.categoria;
   }
-  if (r.forma === "credito" && !r.cartaoId) { const m = memoria().porDesc.get(semAcento(r.descricao)); r.cartaoId = (m && m.cartaoId) || (state.cartoes[0] || {}).id || null; }
+  if (r.forma === "credito" && !r.cartaoId && r.kind === "gasto") {
+    const m = memoria().porDesc.get(semAcento(r.descricao).trim());
+    r.cartaoId = (m && m.forma === "credito" && cartaoPorId(m.cartaoId) && m.cartaoId) || (state.cartoes[0] || {}).id || null;
+  }
   if (r.kind === "receita" && !r.descricao) r.descricao = TIPOS_RECEITA[r.tipoReceita];
   if (r.kind === "conta" && !r.forma) r.forma = ultimaFormaConta(r.conta);
+  if (r.descricao) r.descricao = caprichar(r.descricao);
+
+  // cartão citado que não existe: avisa qual foi usado
+  const usado1 = cartaoPorId(r.cartaoId);
+  if (bancoDito && !cartaoDito && usado1 && (r.kind === "fatura" || ((r.kind === "gasto" || r.kind === "conta") && r.forma === "credito")))
+    r.aviso = `Não achei o cartão “${bancoDito}” cadastrado: usei o ${usado1.nome}.`;
+
+  // 14) "todo mês": gasto vira conta mensal; receita vira receita fixa
+  if (r.recorrente && r.kind === "gasto") r.kind = "contaNova";
+  if (r.recorrente && r.kind === "receita") r.kind = "fixa";
+  if (r.kind === "contaNova" || r.kind === "fixa") {
+    const dataDita = r.dataDita ? r.data : null;
+    if (!r.dia) r.dia = +r.data.slice(8);
+    const deste = diaNoMes(YM_HOJE, r.dia);
+    r.inicio = r.kind === "fixa" && deste < ISO_HOJE && !temRecPassado ? addMes(YM_HOJE, 1) : YM_HOJE;
+    r.data = diaNoMes(r.inicio, r.dia);
+    if (r.kind === "contaNova") {
+      if ((r.forma === "credito" && r.formaDita) || auto) r.auto = r.forma === "credito" ? { forma: "credito", cartaoId: r.cartaoId || (state.cartoes[0] || {}).id } : { forma: "debito" };
+      if (r.auto && r.auto.forma === "credito" && !r.auto.cartaoId) r.auto = null;
+      r.pagaAgora = temPassado && !r.auto;
+      r.dataPag = dataDita && dataDita <= ISO_HOJE ? dataDita : ISO_HOJE;
+      if (r.forma === "vavr") r.forma = "pix";
+    }
+  }
   return r;
+}
+/* Só a categoria de um texto (usada no formulário de lançamento) */
+function categoriaDoTexto(texto) {
+  const r = interpretar(`${texto} 1`, { forcar: "gasto" });
+  return r && r.catReconhecida && r.categoria ? r.categoria : null;
+}
+
+/* Várias coisas numa frase só: "almoço 32 e uber 18 no pix", "mercado 120; farmácia 45", "luz 160, água 90" */
+function dividirFrase(texto) {
+  const t = String(texto || "").replace(/\s+/g, " ").trim();
+  if (!t) return [];
+  const temValor = p => { const r = interpretar(p); return !!(r && r.valor > 0 && !r.valorFraco && r.kind !== "fatura"); };
+  const ehNum = s => s in NUM_PAL || s === "mil";
+  const partes = [];
+  t.split(/\s*;\s*|\s+\+\s+/).filter(Boolean).forEach(bloco => {
+    const tk = bloco.split(" "), pedacos = [];
+    let atual = [];
+    tk.forEach((x, i) => {
+      const n = normTok(x), ant = normTok(tk[i - 1] || ""), prox = normTok(tk[i + 1] || "");
+      const sepE = (n === "e" || n === "mais") && atual.length && i < tk.length - 1
+        && !(ehNum(ant) && ehNum(prox)) && !(MOEDA_PAL.includes(ant) && /^centavos?$/.test(normTok(tk[i + 2] || "")));
+      if (sepE) { pedacos.push({ txt: atual.join(" "), sep: ` ${x} ` }); atual = []; return; }
+      if (/,$/.test(x) && i < tk.length - 1) { atual.push(x.slice(0, -1)); pedacos.push({ txt: atual.join(" "), sep: ", " }); atual = []; return; }
+      atual.push(x);
+    });
+    if (atual.length) pedacos.push({ txt: atual.join(" "), sep: "" });
+    // pedaço sem valor se junta ao vizinho ("arroz e feijão 30", "uber 18, tudo no pix")
+    const juntos = [];
+    pedacos.forEach(p => {
+      const ult = juntos[juntos.length - 1];
+      if (ult && !ult.valor) { ult.txt += ult.sep + p.txt; ult.sep = p.sep; ult.valor = temValor(ult.txt); return; }
+      if (ult && !temValor(p.txt)) { ult.txt += ult.sep + p.txt; ult.sep = p.sep; return; }
+      juntos.push({ ...p, valor: temValor(p.txt) });
+    });
+    partes.push(...(juntos.length > 1 && juntos.every(j => j.valor) ? juntos.map(j => j.txt) : [bloco]));
+  });
+  return partes;
+}
+function interpretarTudo(texto, { forcar = null } = {}) {
+  const partes = dividirFrase(texto);
+  if (partes.length <= 1) { const r = interpretar(texto, { forcar }); return r ? [r] : []; }
+  let rs = partes.map(p => interpretar(p));
+  // quem não disse o tipo herda de quem disse ("recebi 500 do joão e 200 da maria")
+  const tipos = [...new Set(rs.filter(r => r.cue).map(r => (r.kind === "mov" ? `mov:${r.movTipo}` : r.kind === "fixa" ? "receita" : r.kind)))];
+  if (tipos.length === 1 && ["receita", "mov:aporte", "mov:resgate", "mov:rendimento"].includes(tipos[0])) rs = rs.map((r, k) => (r.cue ? r : interpretar(partes[k], { forcar: tipos[0] })));
+  // a forma de pagamento ou a data ditas numa parte valem para as outras ("almoço 32 e uber 18, tudo no pix")
+  const formas = [...new Set(rs.filter(r => r.formaDita && r.kind === "gasto").map(r => r.forma))];
+  const datas = [...new Set(rs.filter(r => r.dataDita).map(r => r.data))];
+  const cartao = (rs.find(r => r.cartaoId && r.forma === "credito") || {}).cartaoId;
+  rs.forEach(r => {
+    if (r.kind === "gasto" && !r.formaDita && formas.length === 1) { r.forma = formas[0]; r.formaDita = true; if (r.forma === "credito") r.cartaoId = cartao || r.cartaoId || (state.cartoes[0] || {}).id || null; }
+    if (r.kind === "conta" && !r.formaDita && formas.length === 1 && formas[0] !== "vavr") { r.forma = formas[0]; if (r.forma === "credito") r.cartaoId = cartao || (state.cartoes[0] || {}).id || null; }
+    if (!r.dataDita && datas.length === 1 && ["gasto", "receita", "conta", "fatura", "mov"].includes(r.kind)) r.data = datas[0];
+  });
+  return rs;
 }
 function ultimaFormaConta(c) {
   const h = state.contas.filter(x => x.pago != null && x.formaPag && (c.recorrenteId ? x.recorrenteId === c.recorrenteId : semAcento(x.nome) === semAcento(c.nome)))
@@ -3040,7 +3459,7 @@ function renderOnboard() {
     { ok: !!c.inicio, t: "Informe quanto você tem hoje", d: "Saldo da conta + carteira, e o VA/VR.", b: `<button class="btn btn-primary btn-sm" type="button" data-open="inicio">Começar</button>` },
     { ok: state.fixas.length > 0 || state.lancamentos.some(l => l.kind === "receita"), t: "Cadastre seu salário", d: "Com “Repete todo mês”, ele aparece sozinho.", b: `<button class="btn btn-secondary btn-sm" type="button" data-open="lancamento" data-kind="receita" data-fixa="1">Cadastrar</button>` },
     { ok: state.recorrentes.length > 0 || state.contas.length > 0, t: "Cadastre suas contas fixas", d: "Luz, internet, aluguel. Dá para deixar no automático.", b: `<button class="btn btn-secondary btn-sm" type="button" data-open="conta">Nova conta</button>` },
-    { ok: state.lancamentos.some(l => l.kind === "gasto"), t: "Registre um gasto", d: "No Registro rápido: “almoço 32 pix”.", b: `<button class="btn btn-secondary btn-sm" type="button" data-focar-rapido>Experimentar</button>` }
+    { ok: state.lancamentos.some(l => l.kind === "gasto"), t: "Registre um gasto", d: "No Registro rápido: “pago 15 reais mercado via pix”.", b: `<button class="btn btn-secondary btn-sm" type="button" data-focar-rapido>Experimentar</button>` }
   ];
   const feitos = passos.filter(p => p.ok).length;
   if (c.onboardOculto || feitos === passos.length) { $("onboard").innerHTML = ""; return; }
@@ -3756,8 +4175,8 @@ $("l-desc").addEventListener("change", () => {
     setRadio("forma", l.forma); if (l.forma === "credito" && l.cartaoId) $("l-cartao").value = l.cartaoId;
     atualizarNotas();
   } else {
-    const r = interpretar(`${$("l-desc").value} 1`);
-    if (r && r.categoria && r.categoria !== "Outros") { $("l-cat").value = r.categoria; marcarCatChips(); }
+    const cat = categoriaDoTexto($("l-desc").value);
+    if (cat && cat !== "Outros") { $("l-cat").value = cat; marcarCatChips(); }
   }
 });
 segmentedTeclado("lanc-kind", setKind);
@@ -4266,36 +4685,105 @@ function comDesfazer(msg, fn, { depois = null, icone = "i-check" } = {}) {
   } } });
 }
 
-/* 8.11 Registro rápido */
-let rapidoAtual = null, forcarTipo = null;
-const TIPO_TXT = { gasto: "Gasto", receita: "Receita", conta: "Pagar conta", fatura: "Pagar fatura", mov: "" };
-function renderPrevia() {
-  const r = rapidoAtual = interpretar($("rapido").value, { forcar: forcarTipo });
-  const box = $("rapido-prev"), btn = $("rapido-salvar");
-  if (!r) { box.innerHTML = ""; btn.disabled = true; btn.textContent = "Salvar"; return; }
-  const chips = [];
-  const futuro = r.data > ISO_HOJE, quando = r.data === ISO_HOJE ? "Hoje" : r.data === addDias(ISO_HOJE, -1) ? "Ontem" : dataBR(r.data);
-  const tipo = r.kind === "mov" ? TIPOS_MOV[r.movTipo] : r.kind === "receita" ? `Receita · ${TIPOS_RECEITA[r.tipoReceita]}` : TIPO_TXT[r.kind];
-  const troca = r.kind === "gasto" || r.kind === "receita";
-  chips.push(troca ? `<button type="button" class="pchip kind${r.kind === "receita" ? " in" : ""}" id="rapido-tipo" title="Trocar entre gasto e receita" aria-label="${tipo}. Toque para trocar entre gasto e receita">${svgIcon("i-repeat")}${esc(tipo)}</button>`
-    : `<span class="pchip kind">${esc(tipo)}</span>`);
-  if (r.kind === "conta") chips.push(`<span class="pchip">${esc(r.conta.nome)} · vence ${dataCurta(r.conta.vencimento)}</span>`);
-  else if (r.kind !== "fatura" && r.descricao) chips.push(`<span class="pchip desc">${esc(r.descricao)}</span>`);
-  chips.push(r.valor > 0 ? `<span class="pchip valor">${fmtBRL.format(r.valor)}</span>` : `<span class="pchip warn">${svgIcon("i-alert")}Falta o valor</span>`);
-  if (r.kind === "gasto") chips.push(`<span class="pchip">${esc(r.categoria)}</span>`);
-  if (r.kind === "gasto" || r.kind === "conta") {
-    const c = cartaoPorId(r.cartaoId);
-    chips.push(`<span class="pchip">${r.forma === "credito" ? `Crédito${c ? ` · ${esc(c.nome)}` : ""}${r.parcelas > 1 ? ` · ${r.parcelas}x${r.valor > 0 ? ` de ${brl(Math.floor(r.valor * 100 / r.parcelas) / 100)}` : ""}` : ""}` : (FORMAS[r.forma] || FORMAS_CONTA[r.forma] || "")}</span>`);
+/* 8.11 Registro rápido: mostra o que entendeu e para onde cada valor vai, antes de salvar */
+let rapidoItens = [], forcarTipo = null;
+const TIPO_TXT = { gasto: "Gasto", receita: "Receita", conta: "Pagar conta", fatura: "Pagar fatura", contaNova: "Conta todo mês", fixa: "Receita fixa", info: "Nada a registrar" };
+const nomeDestino = d => (d === "meta" ? state.objetivos.meta.nome : DESTINOS[d]);
+function tipoRapido(r) {
+  if (r.kind === "mov") return TIPOS_MOV[r.movTipo];
+  if (r.kind === "receita") return `Receita · ${TIPOS_RECEITA[r.tipoReceita]}`;
+  return TIPO_TXT[r.kind];
+}
+/* Para onde vai o dinheiro (e o que ainda falta para salvar) */
+function rotaRapido(r) {
+  const fut = r.data > ISO_HOJE, dia = dataCurta(r.data);
+  if (r.kind === "info") return { txt: r.info, cls: "", icone: "i-info" };
+  const semCartao = { txt: "Cadastre o cartão primeiro", cls: "warn", icone: "i-alert", falta: "cartao" };
+  if (r.kind === "fatura" && !state.cartoes.length) return semCartao;
+  if (r.kind === "fatura" && !cartaoPorId(r.cartaoId)) return { txt: "Escolha de qual cartão", cls: "warn", icone: "i-card", falta: "dialogo" };
+  if (r.kind === "contaNova" && r.formaDita && r.forma === "credito" && !state.cartoes.length) return semCartao;
+  if (!(r.valor > 0)) return { txt: "Falta o valor", cls: "warn", icone: "i-alert", falta: "valor" };
+  if (r.kind === "gasto") {
+    if (r.forma === "credito") {
+      const c = cartaoPorId(r.cartaoId);
+      if (!c) return { txt: "Crédito: cadastre o cartão primeiro", cls: "warn", icone: "i-alert", falta: "cartao" };
+      return { txt: `Vai para a fatura ${c.nome} · vence ${dataCurta(diaNoMes(vencFaturaDaCompra(c, r.data), c.vencimento))}`, cls: "card", icone: "i-card" };
+    }
+    if (r.forma === "vavr") return { txt: fut ? `Sai do VA/VR em ${dia}` : "Sai do saldo de VA/VR", cls: "out", icone: "i-out" };
+    return { txt: fut ? `Agendado: sai do caixa em ${dia}` : "Sai do seu caixa agora", cls: fut ? "fut" : "out", icone: fut ? "i-clock" : "i-out" };
   }
-  if (r.kind === "mov") chips.push(`<span class="pchip">${r.destino === "meta" ? esc(state.objetivos.meta.nome) : DESTINOS[r.destino]}</span>`);
-  if (r.kind === "fatura") { const c = cartaoPorId(r.cartaoId) || state.cartoes[0]; chips.push(`<span class="pchip">${c ? esc(c.nome) : "Sem cartão cadastrado"}</span>`); }
-  const cred = r.kind === "gasto" && r.forma === "credito";
-  chips.push(`<span class="pchip${futuro && !cred ? " fut" : ""}">${svgIcon("i-calendar")}${futuro && !cred ? (r.kind === "receita" ? `A receber · ${dataCurta(r.data)}` : `Agendado · ${dataCurta(r.data)}`) : quando}</span>`);
-  if (troca) chips.push(`<button type="button" class="btn btn-ghost" id="rapido-det">${svgIcon("i-edit", "icon icon-sm")}Ajustar detalhes</button>`);
-  box.innerHTML = chips.join("");
-  const precisaValor = r.kind === "gasto" || r.kind === "receita" || r.kind === "conta";
-  btn.disabled = precisaValor && !(r.valor > 0);
-  btn.textContent = r.kind === "mov" || r.kind === "fatura" ? "Continuar" : r.kind === "conta" ? "Paguei" : "Salvar";
+  if (r.kind === "receita") {
+    const vale = r.tipoReceita === "va" || r.tipoReceita === "vr";
+    if (fut) return { txt: `A receber em ${dia} · só entra ${vale ? "no VA/VR" : "no caixa"} nesse dia`, cls: "fut", icone: "i-clock" };
+    return { txt: vale ? "Entra no saldo de VA/VR" : "Entra no seu caixa agora", cls: "in", icone: "i-in" };
+  }
+  if (r.kind === "conta") {
+    if (r.forma === "credito") {
+      const c = cartaoPorId(r.cartaoId);
+      if (!c) return { txt: "Crédito: cadastre o cartão primeiro", cls: "warn", icone: "i-alert", falta: "cartao" };
+      return { txt: `Conta paga no cartão ${c.nome} · vai para a fatura`, cls: "card", icone: "i-card" };
+    }
+    return { txt: fut ? `Pagamento agendado · sai do caixa em ${dia}` : "Conta paga · sai do seu caixa", cls: fut ? "fut" : "out", icone: fut ? "i-clock" : "i-out" };
+  }
+  if (r.kind === "fatura") {
+    const c = cartaoPorId(r.cartaoId);
+    return { txt: `Fatura ${c.nome} que vence ${dataCurta(r.faturaVenc)} · sai do caixa${fut ? ` em ${dia}` : ""}`, cls: fut ? "fut" : "out", icone: "i-card" };
+  }
+  if (r.kind === "mov") {
+    const inv = invPorId(r.invId), nome = inv ? inv.nome : r.invNovo ? `${r.invNovo.nome} (novo)` : null;
+    if (!nome) return { txt: `Escolha o investimento · ${nomeDestino(r.destino)}`, cls: "warn", icone: "i-invest", falta: "dialogo" };
+    if (r.movTipo === "aporte") return { txt: `Sai do caixa → ${nome}`, cls: "out", icone: "i-invest" };
+    if (r.movTipo === "resgate") {
+      const disp = saldoInvest(inv, r.data);
+      if (r.valor > disp + 0.004) return { txt: `Passa do saldo de ${inv.nome} (${brl(disp)})`, cls: "warn", icone: "i-alert", falta: "saldo" };
+      return { txt: `${inv.nome} → volta para o caixa`, cls: "in", icone: "i-in" };
+    }
+    return { txt: `Soma em ${nome} · o caixa não muda`, cls: "in", icone: "i-invest" };
+  }
+  if (r.kind === "contaNova") return { txt: `Nova conta todo dia ${r.dia}${r.auto ? ` · ${textoAuto(r.auto)}` : ""}${r.pagaAgora ? ` · ${MESES[+YM_HOJE.slice(5) - 1].toLowerCase()} já paga` : ""}`, cls: "rep", icone: "i-repeat" };
+  if (r.kind === "fixa") return { txt: `Entra todo dia ${r.dia} · a partir de ${mesCurto(r.inicio)}${r.data <= ISO_HOJE ? " (este mês já entrou no caixa)" : ""}`, cls: "rep", icone: "i-repeat" };
+  return { txt: "", cls: "" };
+}
+function chipsRapido(r, unico) {
+  const ch = [], rota = rotaRapido(r), tipo = tipoRapido(r);
+  const entra = r.kind === "receita" || r.kind === "fixa" || (r.kind === "mov" && r.movTipo !== "aporte");
+  if (unico && (r.kind === "gasto" || r.kind === "receita"))
+    ch.push(`<button type="button" class="pchip kind${entra ? " in" : ""}" id="rapido-tipo" title="Trocar entre gasto e receita" aria-label="${esc(tipo)}. Toque para trocar entre gasto e receita">${svgIcon("i-repeat")}${esc(tipo)}</button>`);
+  else ch.push(`<span class="pchip kind${entra ? " in" : ""}">${esc(tipo)}</span>`);
+  if (r.kind === "info") { ch.push(`<span class="pchip rota">${svgIcon("i-info")}${esc(r.info)}</span>`); return ch.join(""); }
+  if (r.kind === "conta") ch.push(`<span class="pchip">${esc(r.conta.nome)} · vence ${dataCurta(r.conta.vencimento)}</span>`);
+  else if (!["fatura", "mov"].includes(r.kind) && r.descricao) ch.push(`<span class="pchip desc">${esc(r.descricao)}</span>`);
+  if (r.valor > 0) ch.push(`<span class="pchip valor">${fmtBRL.format(r.valor)}${r.kind === "gasto" && r.forma === "credito" && r.parcelas > 1 ? ` <small>em ${r.parcelas}x de ${fmtBRL.format(Math.floor(r.valor * 100 / r.parcelas) / 100)}</small>` : ""}</span>`);
+  if (r.kind === "gasto" || r.kind === "contaNova") ch.push(r.catReconhecida ? `<span class="pchip">${esc(r.categoria)}</span>` : `<span class="pchip warn" title="Não reconheci a categoria. Ajuste depois, se quiser.">${esc(r.categoria)} · não reconheci</span>`);
+  const forma = r.kind === "gasto" ? (r.forma === "credito" ? `Crédito${cartaoPorId(r.cartaoId) ? ` · ${cartaoPorId(r.cartaoId).nome}` : ""}` : FORMAS[r.forma])
+    : r.kind === "conta" ? (r.forma === "credito" ? "Cartão de crédito" : FORMAS_CONTA[r.forma]) : r.kind === "fatura" ? FORMAS_FATURA[r.forma]
+    : r.kind === "contaNova" && !r.auto && r.pagaAgora ? FORMAS_CONTA[r.forma] : "";
+  if (forma) ch.push(`<span class="pchip">${esc(forma)}${r.formaDita || r.kind === "fatura" ? "" : ` <small>(seu padrão)</small>`}</span>`);
+  if (!["contaNova", "fixa"].includes(r.kind)) {
+    const q = r.data === ISO_HOJE ? "Hoje" : r.data === addDias(ISO_HOJE, -1) ? "Ontem" : r.data === addDias(ISO_HOJE, 1) ? "Amanhã" : dataBR(r.data);
+    ch.push(`<span class="pchip">${svgIcon("i-calendar")}${q}</span>`);
+  }
+  ch.push(`<span class="pchip rota${rota.cls ? " " + rota.cls : ""}">${svgIcon(rota.icone || "i-info")}${esc(rota.txt)}</span>`);
+  if (r.aviso) ch.push(`<span class="pchip warn">${svgIcon("i-alert")}${esc(r.aviso)}</span>`);
+  if (r.kind === "fatura" && r.faturaAberto > 0 && r.valor > r.faturaAberto + 0.004) ch.push(`<span class="pchip warn">${svgIcon("i-alert")}Passa do valor em aberto (${brl(r.faturaAberto)})</span>`);
+  if (r.kind === "contaNova" && !r.auto && !r.pagaAgora && diaNoMes(YM_HOJE, r.dia) < ISO_HOJE)
+    ch.push(`<span class="pchip warn">${svgIcon("i-alert")}${MESES[+YM_HOJE.slice(5) - 1]} fica em aberto: use “Paguei” se já pagou</span>`);
+  if (unico && ["gasto", "receita", "conta", "fatura", "mov"].includes(r.kind) && rota.falta !== "cartao")
+    ch.push(`<button type="button" class="btn btn-ghost" id="rapido-det">${svgIcon("i-edit", "icon icon-sm")}Ajustar detalhes</button>`);
+  return ch.join("");
+}
+function renderPrevia() {
+  const txt = $("rapido").value;
+  const itens = rapidoItens = interpretarTudo(txt, { forcar: forcarTipo });
+  const box = $("rapido-prev"), btn = $("rapido-salvar");
+  if (!itens.length) { box.innerHTML = ""; btn.disabled = true; btn.textContent = "Salvar"; return; }
+  const unico = itens.length === 1;
+  box.innerHTML = (unico ? "" : `<p class="prev-head">${svgIcon("i-sparkle", "icon icon-sm")}Entendi ${itens.length} lançamentos</p>`)
+    + itens.map((r, k) => `<div class="prev-item"${unico ? "" : ` role="group" aria-label="Lançamento ${k + 1} de ${itens.length}"`}>${chipsRapido(r, unico)}</div>`).join("");
+  const validos = itens.filter(r => r.kind !== "info");
+  btn.disabled = !validos.length || validos.some(r => rotaRapido(r).falta === "valor");
+  const um = validos[0], rota = um ? rotaRapido(um) : {};
+  btn.textContent = validos.length > 1 ? `Salvar ${validos.length}` : !um ? "Salvar" : rota.falta === "dialogo" ? "Continuar" : um.kind === "conta" ? "Paguei" : "Salvar";
 }
 function itemDoRapido(r) {
   const it = { id: uid(), kind: r.kind, valor: r.valor, data: r.data, descricao: r.descricao };
@@ -4303,36 +4791,98 @@ function itemDoRapido(r) {
   if (r.kind === "receita") it.tipoReceita = r.tipoReceita;
   return it;
 }
+/* Aplica um lançamento entendido (dentro de um comDesfazer) */
+function aplicarRapido(r) {
+  if (r.kind === "gasto" || r.kind === "receita") { state.lancamentos.push(itemDoRapido(r)); return; }
+  if (r.kind === "conta") { aplicarPagamentoConta(r.conta, { pago: r.valor, data: r.data, forma: r.forma || "pix", cartaoId: r.cartaoId }); return; }
+  if (r.kind === "fatura") {
+    const c = cartaoPorId(r.cartaoId);
+    state.lancamentos.push({ id: uid(), kind: "fatura", valor: r.valor, data: r.data, cartaoId: c.id, referencia: r.faturaRef, forma: r.forma, descricao: `Fatura ${c.nome}` });
+    return;
+  }
+  if (r.kind === "mov") {
+    let invId = r.invId;
+    if (!invId && r.invNovo) { invId = uid(); state.investimentos.push({ id: invId, nome: r.invNovo.nome, tipo: r.invNovo.tipo, destino: r.invNovo.destino, inicial: 0 }); }
+    state.movimentos.push({ id: uid(), investimentoId: invId, tipo: r.movTipo, valor: r.valor, data: r.data });
+    return;
+  }
+  if (r.kind === "contaNova") {
+    const rec = { id: uid(), nome: r.descricao, categoria: r.categoria || "Contas", planejado: r.valor, dia: r.dia, auto: r.auto || null, inicio: r.inicio, fim: null };
+    state.recorrentes.push(rec);
+    if (r.pagaAgora) state.contas.push({ id: uid(), nome: rec.nome, categoria: rec.categoria, planejado: r.valor, vencimento: diaNoMes(r.inicio, r.dia), pago: r.valor, dataPagamento: r.dataPag || ISO_HOJE,
+      formaPag: r.forma || "pix", cartaoId: r.forma === "credito" ? r.cartaoId : null, recorrenteId: rec.id, competencia: r.inicio });
+    return;
+  }
+  if (r.kind === "fixa") {
+    const f = { id: uid(), descricao: r.descricao, valor: r.valor, tipoReceita: r.tipoReceita, dia: r.dia, inicio: r.inicio, fim: null, pulos: [] };
+    state.fixas.push(f);
+    state.lancamentos.push({ id: uid(), kind: "receita", valor: r.valor, data: diaNoMes(r.inicio, r.dia), descricao: r.descricao, tipoReceita: r.tipoReceita, fixaId: f.id, competencia: f.inicio });
+  }
+}
+/* A mensagem do aviso depois de salvar: diz para onde o dinheiro foi */
+function msgRapido(r) {
+  const v = brl(r.valor), fut = r.data > ISO_HOJE;
+  if (r.kind === "gasto") {
+    const c = cartaoPorId(r.cartaoId);
+    if (r.forma === "credito") return `${r.descricao} · ${v}${r.parcelas > 1 ? ` em ${r.parcelas}x` : ""} · foi para a fatura ${c ? c.nome : "do cartão"}.`;
+    return `${r.descricao} · ${v} · ${FORMAS[r.forma]} · ${fut ? `agendado para ${dataBR(r.data)}` : r.forma === "vavr" ? "saiu do VA/VR" : "saiu do caixa"}.`;
+  }
+  if (r.kind === "receita") return `${r.descricao} · ${v} · ${fut ? `a receber em ${dataBR(r.data)}` : r.tipoReceita === "va" || r.tipoReceita === "vr" ? "entrou no VA/VR" : "entrou no caixa"}.`;
+  if (r.kind === "conta") return `${r.conta.nome} paga: ${v} · ${r.forma === "credito" ? "no cartão" : FORMAS_CONTA[r.forma]}${fut ? ` · agendado para ${dataBR(r.data)}` : ""}.`;
+  if (r.kind === "fatura") { const c = cartaoPorId(r.cartaoId); return `Fatura ${c ? c.nome : ""} paga: ${v}${fut ? ` · agendado para ${dataBR(r.data)}` : " · saiu do caixa"}.`; }
+  if (r.kind === "mov") {
+    const inv = invPorId(r.invId), nome = inv ? inv.nome : r.invNovo ? r.invNovo.nome : "";
+    return r.movTipo === "aporte" ? `Aporte de ${v} em ${nome} · saiu do caixa.` : r.movTipo === "resgate" ? `Resgate de ${v} de ${nome} · voltou para o caixa.` : `Rendimento de ${v} em ${nome}.`;
+  }
+  if (r.kind === "contaNova") return `${r.descricao}: ${v} todo dia ${r.dia}${r.auto ? ` (${textoAuto(r.auto)})` : ""}${r.pagaAgora ? ". Este mês já está paga" : ""}.`;
+  if (r.kind === "fixa") return `${r.descricao}: ${v} todo dia ${r.dia}, a partir de ${mesCurto(r.inicio)}.`;
+  return "Salvo.";
+}
+function resumoRapido(lista) {
+  const soma = f => lista.filter(f).reduce((t, r) => t + r.valor, 0);
+  const caixa = soma(r => r.data <= ISO_HOJE && ((r.kind === "gasto" && ["pix", "debito", "dinheiro"].includes(r.forma)) || (r.kind === "conta" && r.forma !== "credito") || r.kind === "fatura" || (r.kind === "mov" && r.movTipo === "aporte")));
+  const cartao = soma(r => (r.kind === "gasto" || r.kind === "conta") && r.forma === "credito");
+  const entrou = soma(r => r.data <= ISO_HOJE && ((r.kind === "receita" && !["va", "vr"].includes(r.tipoReceita)) || (r.kind === "mov" && r.movTipo === "resgate")));
+  const valeSai = soma(r => r.data <= ISO_HOJE && r.kind === "gasto" && r.forma === "vavr");
+  const valeEntra = soma(r => r.data <= ISO_HOJE && r.kind === "receita" && ["va", "vr"].includes(r.tipoReceita));
+  const partes = [caixa && `${brl(caixa)} saiu do caixa`, cartao && `${brl(cartao)} foi para o cartão`, entrou && `${brl(entrou)} entrou no caixa`,
+    valeSai && `${brl(valeSai)} saiu do VA/VR`, valeEntra && `${brl(valeEntra)} entrou no VA/VR`].filter(Boolean);
+  return `${lista.length} lançamentos salvos${partes.length ? ` · ${partes.join(" · ")}` : ""}.`;
+}
 function limparRapido() { $("rapido").value = ""; forcarTipo = null; renderPrevia(); $("rapido").focus(); }
 function preRapido(r) { return { valor: r.valor, data: r.data, descricao: r.descricao, categoria: r.categoria, forma: r.forma, cartaoId: r.cartaoId, parcelas: r.parcelas, tipoReceita: r.tipoReceita }; }
+/* Abre o formulário completo já preenchido (para ajustar ou escolher o que faltou) */
+function abrirDetalheRapido(r) {
+  if (r.kind === "gasto" || r.kind === "receita") abrirLancamento(r.kind, null, preRapido(r));
+  else if (r.kind === "conta") abrirPagar(r.conta, { valor: r.valor, data: r.data, forma: r.forma, cartaoId: r.cartaoId });
+  else if (r.kind === "fatura") abrirLancamento("fatura", null, { cartaoId: r.cartaoId, valor: r.valor, data: r.data, ref: r.faturaRef });
+  else if (r.kind === "mov") abrirMov(r.movTipo, null, { destinoPre: r.destino, invId: r.invId, valor: r.valor, data: r.data });
+}
 $("rapido").addEventListener("input", () => { if (!$("rapido").value.trim()) forcarTipo = null; renderPrevia(); });
 $("rapido-prev").addEventListener("click", e => {
-  if (e.target.closest("#rapido-tipo")) { forcarTipo = rapidoAtual.kind === "gasto" ? "receita" : "gasto"; renderPrevia(); $("rapido-tipo").focus(); return; }
-  if (e.target.closest("#rapido-det")) { const r = rapidoAtual; abrirLancamento(r.kind, null, preRapido(r)); }
+  const r = rapidoItens[0];
+  if (e.target.closest("#rapido-tipo")) { forcarTipo = r.kind === "gasto" ? "receita" : "gasto"; renderPrevia(); $("rapido-tipo").focus(); return; }
+  if (e.target.closest("#rapido-det")) { abrirDetalheRapido(r); $("rapido").value = ""; forcarTipo = null; renderPrevia(); }
 });
 $("form-rapido").addEventListener("submit", e => {
   e.preventDefault();
-  const r = rapidoAtual;
-  if (!r) { $("rapido").focus(); return; }
-  if (r.kind === "mov") { abrirMov(r.movTipo, null, { destinoPre: r.destino, valor: r.valor, data: r.data }); $("rapido").value = ""; renderPrevia(); return; }
-  if (r.kind === "fatura") {
-    if (!state.cartoes.length) { toast("Cadastre o cartão primeiro."); abrirCartao(); return; }
-    abrirLancamento("fatura", null, { cartaoId: r.cartaoId || state.cartoes[0].id, valor: r.valor, data: r.data }); $("rapido").value = ""; renderPrevia(); return;
-  }
-  if (!(r.valor > 0)) { toast("Inclua o valor. Ex.: mercado 85,90"); $("rapido").focus(); return; }
-  if (r.kind === "conta") { pagarConta(r.conta, { pago: r.valor, data: r.data, forma: r.forma, cartaoId: r.cartaoId }); limparRapido(); return; }
-  if (r.kind === "gasto" && r.forma === "credito" && !state.cartoes.length) { toast("Para lançar no crédito, cadastre o cartão primeiro."); abrirCartao(); return; }
-  const it = itemDoRapido(r), fut = it.data > ISO_HOJE && !(it.kind === "gasto" && it.forma === "credito");
-  const msg = it.kind === "receita" ? `${it.descricao} · ${brl(it.valor)} ${fut ? `· a receber em ${dataBR(it.data)}` : "· entrou no saldo"}`
-    : `${it.descricao} · ${brl(it.valor)} · ${FORMAS[it.forma]}${it.parcelas > 1 ? ` em ${it.parcelas}x` : ""}${fut ? ` · agendado para ${dataBR(it.data)}` : ""}`;
-  comDesfazer(msg, () => state.lancamentos.push(it));
+  const itens = rapidoItens.filter(r => r.kind !== "info");
+  if (!itens.length) { if (rapidoItens.length) toast(rapidoItens[0].info, { icone: "i-info" }); $("rapido").focus(); return; }
+  const rotas = itens.map(rotaRapido);
+  if (rotas.some(x => x.falta === "valor")) { toast("Inclua o valor. Ex.: mercado 85,90"); $("rapido").focus(); return; }
+  if (rotas.some(x => x.falta === "cartao")) { toast("Para lançar no crédito ou pagar fatura, cadastre o cartão primeiro. Depois é só tocar em Salvar de novo."); abrirCartao(); return; }
+  const semSaldo = rotas.find(x => x.falta === "saldo");
+  if (semSaldo) { toast(`${semSaldo.txt}.`, { icone: "i-alert" }); $("rapido").focus(); return; }
+  const diretos = itens.filter((r, k) => !rotas[k].falta), pendente = itens.find((r, k) => rotas[k].falta === "dialogo");
+  if (diretos.length) comDesfazer(diretos.length === 1 ? msgRapido(diretos[0]) : resumoRapido(diretos), () => diretos.forEach(aplicarRapido));
   limparRapido();
+  if (pendente) abrirDetalheRapido(pendente);
 });
 function exemplosRapido() {
   const c = state.cartoes[0], cn = c ? " " + semAcento(c.nome).split(/\s+/)[0] : "";
-  const ex = ["almoço 32 vr", "uber 18,50 ontem", "mercado 245,90 débito", `tv 1.200 em 6x${cn}`, "recebi freela 800", "guardei 300 reserva"];
+  const ex = ["pago 15 reais mercado via pix", "almoço 32 no vr", `tv 1.200 em 6x${cn}`, "uber 18,50 ontem", "almoço 30 e uber 18 no pix", "recebi freela 800", "guardei 300 na reserva", c ? "netflix 55,90 todo mês no cartão" : "aluguel 1.500 todo dia 10"];
   const conta = contasParaPagar()[0];
-  if (conta) ex.splice(3, 0, `paguei ${semAcento(conta.nome)} ${String(conta.planejado).replace(".", ",")}`);
+  if (conta) ex.splice(3, 0, `paguei ${semAcento(conta.nome).toLowerCase()} ${String(conta.planejado).replace(".", ",")}`);
   $("rapido-ex").innerHTML = ex.map(t => `<button class="ex-chip" type="button" data-ex="${esc(t)}">${esc(t)}</button>`).join("");
 }
 $("rapido-ex").addEventListener("click", e => { const b = e.target.closest("[data-ex]"); if (!b) return; $("rapido").value = b.dataset.ex; forcarTipo = null; renderPrevia(); $("rapido").focus(); });
@@ -4348,23 +4898,24 @@ function registroDaOcorrencia(c) {
   if (!reg) { reg = { id: uid(), recorrenteId: c.recorrenteId, competencia: c.competencia, nome: c.nome, categoria: c.categoria, planejado: c.planejado, vencimento: c.vencimento, pago: null, dataPagamento: null, formaPag: null, cartaoId: null }; state.contas.push(reg); }
   return reg;
 }
+function aplicarPagamentoConta(c, { pago, data, forma, cartaoId }) {
+  const reg = registroDaOcorrencia(c);
+  Object.assign(reg, { pago, dataPagamento: data, formaPag: forma, cartaoId: forma === "credito" ? cartaoId : null });
+}
 function pagarConta(c, { pago, data, forma, cartaoId }) {
   if (forma === "credito" && !cartaoId) cartaoId = (state.cartoes[0] || {}).id || null;
   if (forma === "credito" && !cartaoId) { toast("Cadastre um cartão para pagar no crédito."); abrirCartao(); return; }
-  comDesfazer(`${c.nome} paga: ${brl(pago)} · ${FORMAS_CONTA[forma]}${data > ISO_HOJE ? ` · agendado para ${dataBR(data)}` : ""}.`, () => {
-    const reg = registroDaOcorrencia(c);
-    Object.assign(reg, { pago, dataPagamento: data, formaPag: forma, cartaoId: forma === "credito" ? cartaoId : null });
-  });
+  comDesfazer(`${c.nome} paga: ${brl(pago)} · ${FORMAS_CONTA[forma]}${data > ISO_HOJE ? ` · agendado para ${dataBR(data)}` : ""}.`, () => aplicarPagamentoConta(c, { pago, data, forma, cartaoId }));
 }
-function abrirPagar(c) {
+function abrirPagar(c, pre = {}) {
   contaPagar = c;
   const f = $("form-pagar"); f.reset(); limparErros(f);
   $("dlg-pagar-title").textContent = `Paguei · ${c.nome}`;
   $("p-resumo").innerHTML = `<b>${esc(c.nome)}</b> · vence ${dataBR(c.vencimento)} (${quandoTxt(c.vencimento)}) · planejado <b class="num">${brl(c.planejado)}</b>`;
-  $("p-valor").value = moedaParaInput(c.planejado);
-  $("p-data").value = ISO_HOJE;
-  setRadio("formaPagar", ultimaFormaConta(c));
-  $("p-cartao").innerHTML = opcoesCartao();
+  $("p-valor").value = moedaParaInput(pre.valor || c.planejado);
+  $("p-data").value = pre.data || ISO_HOJE;
+  setRadio("formaPagar", FORMAS_CONTA[pre.forma] ? pre.forma : ultimaFormaConta(c));
+  $("p-cartao").innerHTML = opcoesCartao(pre.cartaoId);
   $("p-cartao-wrap").hidden = radio("formaPagar") !== "credito";
   abrirDialogo($("dlg-pagar"));
   setTimeout(() => { $("p-valor").focus(); $("p-valor").select(); }, 30);
